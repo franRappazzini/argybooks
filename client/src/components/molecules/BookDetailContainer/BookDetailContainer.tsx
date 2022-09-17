@@ -43,7 +43,6 @@ function BookDetailContainer({
           </Typography>
           <Typography variant="body1" sx={{ fontStyle: "italic", m: "1rem 0" }}>
             <CustomLink to="/" color="primary" text={author.name} />
-            {/* <Link to={"/"}>{author}</Link> */}
           </Typography>
           <Typography variant="body1">rating: {rating} / comentarios</Typography>
           <Typography variant="body1" sx={{ m: "0.7rem 0" }}>
