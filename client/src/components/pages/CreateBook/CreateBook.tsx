@@ -61,7 +61,6 @@ function CreateBook() {
 
       console.log(res);
 
-      // TODO aca poner el swal alert para ver o seguir creando
       AlertOptions({
         title: "Creado!",
         text: "Libro creado exitosamente",

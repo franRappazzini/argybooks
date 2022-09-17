@@ -1,0 +1,10 @@
+.header_component {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .btns_container {
+    display: flex;
+    grid-gap: 1rem;
+  }
+}
