@@ -26,16 +26,8 @@ function BookDetailContainer({
       </Breadcrumbs>
 
       <article className="article_container">
-        {/* <div
-          style={{
-            backgroundImage: `url(${image})`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-          }}
-          className="img_detail"
-        ></div> */}
-        <img src={image} alt={name} />
+        <div style={{ backgroundImage: `url(${image})` }} className="img_detail"></div>
+        {/* <img src={image} alt={name} /> */}
 
         <section className="details">
           <Typography variant="h4" component="h1">

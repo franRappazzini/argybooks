@@ -18,7 +18,7 @@ function Detail() {
   }, [bookId]);
 
   return (
-    <main className="detail_component component">
+    <main className="detail_component component max_width">
       {loading ? (
         <CircularProgress sx={{ mt: "2rem" }} />
       ) : book && Object.values(book).length > 0 ? (
