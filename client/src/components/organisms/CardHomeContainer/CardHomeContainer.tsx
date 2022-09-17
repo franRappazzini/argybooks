@@ -13,7 +13,11 @@ function CardHomeContainer() {
       {loading ? (
         <CircularProgress />
       ) : books.length > 0 ? (
-        books.map((book: BookHome) => <CardHome key={book.id} {...book} />)
+        <section className="cards_container">
+          {books.map((book: BookHome) => (
+            <CardHome key={book.id} {...book} />
+          ))}
+        </section>
       ) : (
         <p>Lo sentimos, aun no hay libros disponibles. Puedes cargar</p>
       )}
