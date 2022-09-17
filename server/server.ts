@@ -22,6 +22,6 @@ server.use("/category", category);
 
 const port = 3001;
 server.listen(port, () => {
-  sequelize.sync({ force: true });
+  sequelize.sync({ force: false });
   console.log("Server listening on port:", port);
 });

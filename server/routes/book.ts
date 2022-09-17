@@ -46,8 +46,14 @@ book.get("", async (req, res) => {
   try {
     let options = { where: {}, include: [{ model: Category }, { model: Author }] };
     if (name) {
+      // busco si existe ese autor
+      const authorOptions = { where: { name: { [Op.iLike]: `%${name}%` } }, attributes: ["id"] };
+      let authorIds = await Author.findAll(authorOptions);
+      // mapeo solo los ids
+      authorIds = authorIds.map((val) => val.getDataValue("id"));
+      // completo la query para el book
       options.where = {
-        [Op.or]: { name: { [Op.iLike]: `%${name}%` }, author: { [Op.iLike]: `%${name}%` } },
+        [Op.or]: { name: { [Op.iLike]: `%${name}%` }, authorId: { [Op.or]: authorIds } },
       };
     }
 
