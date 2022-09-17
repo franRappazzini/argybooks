@@ -6,6 +6,7 @@ import express from "express";
 import fileupload from "express-fileupload";
 import morgan from "morgan";
 import { sequelize } from "./db/db";
+import user from "./routes/user";
 
 const server = express();
 server.use(cors());
@@ -19,6 +20,7 @@ server.use(morgan("tiny"));
 server.use("/book", book);
 server.use("/aws", aws);
 server.use("/category", category);
+server.use("/user", user);
 
 const port = 3001;
 server.listen(port, () => {
