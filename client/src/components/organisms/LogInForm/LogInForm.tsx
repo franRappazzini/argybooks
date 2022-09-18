@@ -1,4 +1,4 @@
-import "./SignUpForm.scss";
+import "./LonInForm.scss";
 
 import {
   Card,
@@ -15,43 +15,40 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
 import { GetLoggedUserHook } from "../../../utils/customHooks";
-import { ICreateUser } from "../../../utils/interfaces";
+import { ILogInUser } from "../../../utils/interfaces";
 import { LoadingButton } from "@mui/lab";
-import axios from "axios";
-import { createUser } from "../../../redux/actions/userActions";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { userValidations } from "../../../utils/functions";
+import { userLogInValidations } from "../../../utils/functions";
 
-const initial = { username: "", email: "", password: "", showPass: false };
+const initial = { email: "", password: "", showPass: false };
 
-function SignUpForm() {
-  const [data, setData] = useState<ICreateUser>(initial);
+function LogInForm() {
+  const [data, setData] = useState<ILogInUser>(initial);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { setLoggedUser } = GetLoggedUserHook();
+  const { setLoggedUser, findLoggedUser } = GetLoggedUserHook();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const validation = userValidations(data);
+    const validation = userLogInValidations(data);
     if (validation) return AlertBasic("Error..", validation, "error");
 
     setLoading(true);
 
     try {
-      const res = await createUser(data);
-
-      localStorage.setItem("lsLoggedUser", JSON.stringify(res.response));
-      setLoggedUser(res.response);
-      AlertBasic("Felicidades!", "Usuario creado con éxito", "success");
+      const res = await findLoggedUser(data);
+      localStorage.setItem("lsLoggedUser", JSON.stringify(res));
+      setLoggedUser(res);
+      // TODO crear toast para esto
+      AlertBasic("Felicidades!", "Ingreso correcto", "success");
       setData(initial);
       setLoading(false);
-      navigate("/");
+      navigate("/", { state: { fromLogIn: true } });
     } catch (err) {
       setLoading(false);
-      if (axios.isAxiosError(err)) return AlertBasic("Error!", err.message, "error");
-      else return AlertBasic("Error!", "Lo sentimos, vuelva a intentarlo mas tarde", "error");
+      return AlertBasic("", "Email o contraseña incorrectos, vuelva a intentarlo", "error");
     }
   };
 
@@ -63,17 +60,8 @@ function SignUpForm() {
   const handleMouseDownPassword = (e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault();
 
   return (
-    <Card elevation={1} className="sign-up_container">
-      <form className="sign-up_form" onSubmit={handleSubmit}>
-        <TextField
-          label="Nombre de usuario*"
-          variant="outlined"
-          size="small"
-          name="username"
-          type="text"
-          onChange={handleChange}
-          value={data.username}
-        />
+    <Card elevation={1} className="log-in_container">
+      <form className="log-in_form" onSubmit={handleSubmit}>
         <TextField
           label="Email*"
           variant="outlined"
@@ -113,16 +101,16 @@ function SignUpForm() {
 
         <div>
           <LoadingButton loading={loading} variant="contained" type="submit" size="small">
-            Registrarse
+            Iniciar sesión
           </LoadingButton>
         </div>
 
         <Typography variant="body1" sx={{ mt: "1rem" }}>
-          Ya tiene una cuenta? <CustomLink text="Inicie sesión" to="/log_in" color="primary" />
+          Aun no esta registrado? <CustomLink text="Registrese" to="/sign_up" color="primary" />
         </Typography>
       </form>
     </Card>
   );
 }
 
-export default SignUpForm;
+export default LogInForm;
