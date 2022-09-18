@@ -3,7 +3,7 @@ import "./CardBook.scss";
 import { Box, Card, CardContent, Typography } from "@mui/material";
 
 import { CompleteBook } from "../../../utils/interfaces";
-import { Link } from "react-router-dom";
+import CustomLink from "../../atoms/CustomLink/CustomLink";
 
 function CardBook({ id, image, name, author, year, language }: CompleteBook) {
   return (
@@ -17,18 +17,12 @@ function CardBook({ id, image, name, author, year, language }: CompleteBook) {
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
               height: "8rem",
-              // width: "100%",
             }}
           ></div>
           <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            {/* <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-              Word of the Day
-            </Typography> */}
             <Box>
               <Typography variant="h5" component="div">
-                <Link to={`/book/${id}`} className="link_card-book">
-                  {name}
-                </Link>
+                <CustomLink to={`/book/${id}`} text={name} color="inherit" />
               </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
                 {author.name}

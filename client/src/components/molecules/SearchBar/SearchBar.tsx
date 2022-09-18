@@ -8,7 +8,7 @@ import { SearchBooksHook } from "../../../utils/customHooks";
 // import { Search } from "@mui/icons-material";
 
 function SearchBar() {
-  const { searchBook, setLoader, books, loading } = SearchBooksHook();
+  const { searchBook, setLoader } = SearchBooksHook();
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -26,24 +26,17 @@ function SearchBar() {
 
   return (
     <form onSubmit={handleSubmit}>
-      {/* <TextField
-        label="Buscar por título o autor.."
-        variant="outlined"
-        onChange={handleChange}
-        value={search}
-        autoComplete="off"
-        size="small"
-      /> */}
-
       <FormControl sx={{ m: 1, minWidth: "25ch" }} variant="outlined">
-        <InputLabel htmlFor="outlined-adornment-input">Buscar por título o autor..</InputLabel>
+        <InputLabel htmlFor="outlined-adornment-input" size="small">
+          Buscar por título o autor..
+        </InputLabel>
         <OutlinedInput
           id="outlined-adornment-input"
           label="Buscar por título o autor.."
           type="text"
           value={search}
           onChange={handleChange}
-          // size="small"
+          size="small"
           endAdornment={
             <InputAdornment position="end">
               <IconButton aria-label="toggle" edge="end" type="submit">

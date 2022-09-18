@@ -44,7 +44,7 @@ function BookDetailContainer({
           <div className="more_details">
             <span>
               <Typography variant="body1" color="text.secondary" sx={{ mr: "0.5rem" }}>
-                categorías:
+                Categorías:
               </Typography>
               {categories.map((cat, i) =>
                 i > 0 && i < categories.length ? " / " + cat.name : cat.name
