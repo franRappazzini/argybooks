@@ -4,6 +4,10 @@ import { hash } from "../../utils/functions";
 
 @Table
 export class User extends Model {
+  @AllowNull(false)
+  @Column
+  declare username: string;
+
   @Unique
   @AllowNull(false)
   @IsEmail
