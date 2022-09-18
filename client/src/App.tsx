@@ -7,6 +7,8 @@ import CreateBook from "./components/pages/CreateBook/CreateBook";
 import Detail from "./components/pages/Detail/Detail";
 import Header from "./components/organisms/Header/Header";
 import Home from "./components/pages/Home/Home";
+import IsLogged from "./components/pages/IsLogged/IsLogged";
+import LogIn from "./components/pages/LogIn/LogIn";
 import SignUp from "./components/pages/SignUp/SignUp";
 
 function App() {
@@ -15,14 +17,16 @@ function App() {
       <Header />
 
       <Routes>
+        <Route element={<IsLogged />}>
+          <Route path="/sign_up" element={<SignUp />} />
+          <Route path="/log_in" element={<LogIn />} />
+        </Route>
+
         <Route path="/" element={<Home />} />
 
         <Route path="/books" element={<Books />} />
 
         <Route path="/book/:bookId" element={<Detail />} />
-
-        {/* TODO poner en protegida (para logeados) */}
-        <Route path="/sign_up" element={<SignUp />} />
 
         <Route path="/create_book" element={<CreateBook />} />
       </Routes>
