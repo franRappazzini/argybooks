@@ -41,10 +41,10 @@ book.post("", async (req, res) => {
 });
 
 book.get("", async (req, res) => {
-  const { name } = req.query;
+  const { name, category, author } = req.query;
 
   try {
-    let options = { where: {}, include: [{ model: Category }, { model: Author }] };
+    let options = { where: { [Op.and]: {} }, include: [{ model: Category }, { model: Author }] };
     if (name) {
       // busco si existe ese autor
       const authorOptions = { where: { name: { [Op.iLike]: `%${name}%` } }, attributes: ["id"] };
@@ -53,8 +53,16 @@ book.get("", async (req, res) => {
       authorIds = authorIds.map((val) => val.getDataValue("id"));
       // completo la query para el book
       options.where = {
-        [Op.or]: { name: { [Op.iLike]: `%${name}%` }, authorId: { [Op.or]: authorIds } },
+        [Op.and]: {
+          [Op.or]: { name: { [Op.iLike]: `%${name}%` }, authorId: { [Op.or]: authorIds } },
+        },
       };
+    }
+    if (category) {
+      options.where[Op.and] = { ...options.where[Op.and], "$categories.name$": category };
+    }
+    if (author) {
+      options.where[Op.and] = { ...options.where[Op.and], "$author.name$": author };
     }
 
     const response = await Book.findAll(options);

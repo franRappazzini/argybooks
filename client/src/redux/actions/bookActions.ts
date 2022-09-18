@@ -1,13 +1,19 @@
 import { Dispatch } from "redux";
+import { SearchBook } from "../../utils/interfaces";
 import axios from "axios";
 import { bookActions } from "../../utils/enums";
 
 const URL = "http://localhost:3001/book";
 
-export const getAllBooks = (name?: string) => {
+export const getAllBooks = (data?: SearchBook) => {
+  // const { search, category, author } = data;
+
   return async (dispatch: Dispatch) => {
-    let url = URL;
-    if (name) url += `?name=${name}`;
+    // completo la query
+    let url = URL + `?`;
+    if (data?.search && data?.search !== "") url += `name=${data?.search}&`;
+    if (data?.category && data?.category !== "") url += `category=${data?.category}&`;
+    if (data?.author && data?.author !== "") url += `author=${data?.author}&`;
 
     try {
       const { data } = await axios.get(url);
@@ -67,15 +73,4 @@ export const uploadBookCover = async (image: FormData) => {
   } catch (err) {
     throw err;
   }
-};
-
-export const getCategories = () => {
-  return async (dispatch: Dispatch) => {
-    try {
-      const { data } = await axios.get("http://localhost:3001/category");
-      dispatch({ type: bookActions.GET_CATEGORIES, payload: data });
-    } catch (err) {
-      throw err;
-    }
-  };
 };

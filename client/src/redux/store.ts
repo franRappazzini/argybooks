@@ -1,5 +1,6 @@
 import bookReducer from "./reducers/bookReducer";
 import { configureStore } from "@reduxjs/toolkit";
+import otherReducer from "./reducers/otherReducer";
 import userReducer from "./reducers/userReducer";
 
 // ...
@@ -8,6 +9,7 @@ const store = configureStore({
   reducer: {
     book: bookReducer,
     user: userReducer,
+    other: otherReducer,
   },
 });
 

@@ -24,6 +24,12 @@ export interface ICategory {
   Books_Categories: object;
 }
 
+export interface SearchBook {
+  search?: string;
+  category?: string;
+  author?: string;
+}
+
 export interface CompleteBook {
   id: number;
   author: Author;

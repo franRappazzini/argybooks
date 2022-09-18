@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { User } from "../db/models/User";
+import { hash } from "./../utils/functions";
 
 const user = Router();
 
@@ -24,10 +25,13 @@ user.get("", async (req, res) => {
 });
 
 user.get("/logged", async (req, res) => {
-  const { email, password } = req.query;
+  const { email, password }: any = req.query;
 
   try {
-    const response = await User.findOne({ where: { email, password }, rejectOnEmpty: true });
+    const response = await User.findOne({
+      where: { email, password: hash(password) },
+      rejectOnEmpty: true,
+    });
     res.json(response);
   } catch (err) {
     res.status(404).json(err);

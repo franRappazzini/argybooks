@@ -3,11 +3,11 @@ import "./Books.scss";
 import CardBook from "../../molecules/CardBook/CardBook";
 import { CircularProgress } from "@mui/material";
 import { CompleteBook } from "../../../utils/interfaces";
+import { GetBooksHook } from "../../../utils/customHooks";
 import SearchBar from "../../molecules/SearchBar/SearchBar";
-import { SearchBooksHook } from "../../../utils/customHooks";
 
 function Books() {
-  const { books, loading } = SearchBooksHook();
+  const { books, loading } = GetBooksHook();
 
   return (
     <main className="books_component component">

@@ -1,12 +1,12 @@
-import { CompleteUser, ILogInUser } from "./interfaces";
+import { CompleteUser, ILogInUser, SearchBook } from "./interfaces";
 import { findUser, setUser } from "../redux/actions/userActions";
-import { getAllBooks, getBook, getCategories, setLoading } from "./../redux/actions/bookActions";
+import { getAllBooks, getBook, setLoading } from "./../redux/actions/bookActions";
+import { getAuthors, getCategories } from "../redux/actions/otherActions";
 import { useAppDispatch, useAppSelector } from "./../redux/hooks";
 
 import { useEffect } from "react";
 
 // BOOK
-
 export const GetBooksHook = () => {
   const dispatch = useAppDispatch();
   const { books, loading } = useAppSelector((state) => state.book);
@@ -23,7 +23,7 @@ export const SearchBooksHook = () => {
   const dispatch = useAppDispatch();
   const { books, loading } = useAppSelector((state) => state.book);
 
-  const searchBook = (name: string) => dispatch(getAllBooks(name));
+  const searchBook = (data: SearchBook) => dispatch(getAllBooks(data));
   const setLoader = (setter: boolean) => dispatch(setLoading(setter));
 
   return { searchBook, setLoader, books, loading };
@@ -42,15 +42,19 @@ export const GetDetailBookHook = () => {
   return { book, getBookDetail, loading };
 };
 
-export const GetCategoriesHook = (): string[] => {
+export const GetOthersHook = (): { categories: string[]; authors: string[] } => {
   const dispatch = useAppDispatch();
-  const { categories } = useAppSelector((state) => state.book);
+  const { categories, authors } = useAppSelector((state) => state.other);
 
   useEffect(() => {
     dispatch(getCategories());
+    dispatch(getAuthors());
   }, [dispatch]);
 
-  return categories.map((cat: { id: number; name: string }) => cat.name);
+  return {
+    authors: authors.map((author: { id: number; name: string }) => author.name),
+    categories: categories.map((cat: { id: number; name: string }) => cat.name),
+  };
 };
 
 // USER
@@ -59,8 +63,6 @@ export const GetLoggedUserHook = () => {
   const { loggedUser } = useAppSelector((state) => state.user);
 
   const lsLoggedUser = localStorage.getItem("lsLoggedUser");
-
-  console.log(lsLoggedUser);
 
   useEffect(() => {
     lsLoggedUser && dispatch(setUser(JSON.parse(lsLoggedUser)));

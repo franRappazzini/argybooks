@@ -27,10 +27,10 @@ function Header() {
           <MenuHeader {...loggedUser} />
         ) : (
           <div className="btns_container">
-            <Button size="small" onClick={() => navigate("/sign_up")}>
+            <Button size="small" variant="outlined" onClick={() => navigate("/sign_up")}>
               Registrarse
             </Button>
-            <Button size="small" variant="outlined" onClick={() => navigate("/log_in")}>
+            <Button size="small" onClick={() => navigate("/log_in")}>
               Iniciar sesión
             </Button>
           </div>

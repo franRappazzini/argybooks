@@ -14,12 +14,8 @@ import { Author } from "./Author";
 import { Books_Categories } from "./Books_Categories";
 import { Category } from "./Category";
 
-// Model Book
 @Table
 export class Book extends Model {
-  //   @AllowNull(false)
-  //   @Column
-  //   declare author: string;
   @Unique
   @AllowNull(false)
   @Column

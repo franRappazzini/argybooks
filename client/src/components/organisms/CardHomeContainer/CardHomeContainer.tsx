@@ -9,7 +9,7 @@ function CardHomeContainer() {
   const { books, loading } = GetBooksHook();
 
   return (
-    <section className="card-home_container">
+    <section className="card-home_container max_width">
       {loading ? (
         <CircularProgress />
       ) : books.length > 0 ? (

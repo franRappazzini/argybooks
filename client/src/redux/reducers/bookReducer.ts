@@ -5,7 +5,6 @@ const initialState = {
   books: [],
   book: {},
   loading: true,
-  categories: [],
 };
 
 const bookReducer = (state = initialState, action: AnyAction) => {
@@ -16,8 +15,6 @@ const bookReducer = (state = initialState, action: AnyAction) => {
       return { ...state, book: action.payload, loading: false };
     case bookActions.SET_LOADING:
       return { ...state, loading: action.payload };
-    case bookActions.GET_CATEGORIES:
-      return { ...state, categories: action.payload };
     default:
       return { ...state, loading: true };
   }
