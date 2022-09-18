@@ -1,7 +1,11 @@
+import { CompleteUser, ILogInUser } from "./interfaces";
+import { findUser, setUser } from "../redux/actions/userActions";
 import { getAllBooks, getBook, getCategories, setLoading } from "./../redux/actions/bookActions";
 import { useAppDispatch, useAppSelector } from "./../redux/hooks";
 
 import { useEffect } from "react";
+
+// BOOK
 
 export const GetBooksHook = () => {
   const dispatch = useAppDispatch();
@@ -47,4 +51,23 @@ export const GetCategoriesHook = (): string[] => {
   }, [dispatch]);
 
   return categories.map((cat: { id: number; name: string }) => cat.name);
+};
+
+// USER
+export const GetLoggedUserHook = () => {
+  const dispatch = useAppDispatch();
+  const { loggedUser } = useAppSelector((state) => state.user);
+
+  const lsLoggedUser = localStorage.getItem("lsLoggedUser");
+
+  console.log(lsLoggedUser);
+
+  useEffect(() => {
+    lsLoggedUser && dispatch(setUser(JSON.parse(lsLoggedUser)));
+  }, [lsLoggedUser, dispatch]);
+
+  const setLoggedUser = (user: CompleteUser) => dispatch(setUser(user));
+  const findLoggedUser = (user: ILogInUser) => findUser(user);
+
+  return { loggedUser, setLoggedUser, findLoggedUser };
 };

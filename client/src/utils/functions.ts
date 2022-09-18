@@ -1,4 +1,4 @@
-import { ICreateBook, ICreateUser } from "./interfaces";
+import { ICreateBook, ICreateUser, ILogInUser } from "./interfaces";
 
 import { arrLanguages } from "./vars";
 
@@ -20,8 +20,16 @@ export const bookValidations = (
 };
 
 export const userValidations = (user: ICreateUser) => {
+  const { email, password, username } = user;
+
+  if (username.length < 3) return "El Nombre o nick debe tener al menos 3 caracteres";
+  if (!email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) return "El email debe tener tal formato";
+  if (password.length < 6) return "La contraseña debe contener al menos 6 caracteres";
+};
+
+export const userLogInValidations = (user: ILogInUser) => {
   const { email, password } = user;
 
   if (!email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)) return "El email debe tener tal formato";
-  if (password.length < 6) return "La contraseña debe contener al menos 6 caracteres";
+  if (!password.length) return "La contraseña es obligatoria";
 };

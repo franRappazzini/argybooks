@@ -4,3 +4,8 @@ export enum bookActions {
   SET_LOADING = "SET_LOADING",
   GET_CATEGORIES = "GET_CATEGORIES",
 }
+
+export enum userActions {
+  GET_ALL_USERS = "GET_ALL_USERS",
+  SET_USER = "SET_USER",
+}

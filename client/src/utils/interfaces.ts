@@ -47,8 +47,26 @@ export interface ICreateBook {
   categories: string[];
 }
 
+// USER
+
 export interface ICreateUser {
+  email: string;
+  username: string;
+  password: string;
+  showPass: boolean;
+}
+
+export interface ILogInUser {
   email: string;
   password: string;
   showPass: boolean;
+}
+
+export interface CompleteUser {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  createdAt: string;
+  updatedAt: string;
 }

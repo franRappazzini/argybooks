@@ -1,13 +1,13 @@
 import bookReducer from "./reducers/bookReducer";
 import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./reducers/userReducer";
 
 // ...
 
 const store = configureStore({
   reducer: {
     book: bookReducer,
-    // comments: commentsReducer,
-    // users: usersReducer,
+    user: userReducer,
   },
 });
 
