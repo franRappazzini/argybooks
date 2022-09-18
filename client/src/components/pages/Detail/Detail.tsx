@@ -1,7 +1,6 @@
 import "./Detail.scss";
 
 import { CircularProgress } from "@mui/material";
-import { CompleteBook } from "../../../utils/interfaces";
 import DetailContainer from "../../organisms/DetailContainer/DetailContainer";
 import { GetDetailBookHook } from "../../../utils/customHooks";
 import { useEffect } from "react";
