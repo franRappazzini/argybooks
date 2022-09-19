@@ -1,6 +1,6 @@
 import "./Header.scss";
 
-import { Button, Card, Typography } from "@mui/material";
+import { Button, Card } from "@mui/material";
 
 import CustomLink from "../../atoms/CustomLink/CustomLink";
 import { GetLoggedUserHook } from "../../../utils/customHooks";
@@ -19,9 +19,12 @@ function Header() {
   return (
     <Card elevation={1} className="header_component">
       <section className="header_container max_width">
-        <Typography variant="h4">
-          <CustomLink to="/" text="Book" color="inherit" underline="none" />
-        </Typography>
+        <nav className="nav_header">
+          <CustomLink to="/" text="Book" color="inherit" underline="none" variant="h6" />
+          {loggedUser && Object.keys(loggedUser).length > 0 && (
+            <CustomLink to="/create_book" text="Crear Libro" color="inherit" />
+          )}
+        </nav>
 
         {loggedUser && Object.keys(loggedUser).length > 0 ? (
           <MenuHeader {...loggedUser} />

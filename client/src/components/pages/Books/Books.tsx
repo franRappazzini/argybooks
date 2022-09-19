@@ -9,6 +9,8 @@ import SearchBar from "../../molecules/SearchBar/SearchBar";
 function Books() {
   const { books, loading } = GetBooksHook();
 
+  // TODO revisar re render aca (con 3g slow)
+
   return (
     <main className="books_component component">
       <SearchBar />

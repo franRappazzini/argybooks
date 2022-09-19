@@ -8,13 +8,29 @@ interface ILink {
   color: string;
   text: string;
   underline?: "none" | "always" | "hover";
+  variant?:
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "subtitle1"
+    | "subtitle2"
+    | "body1"
+    | "body2"
+    | "caption"
+    | "button"
+    | "overline"
+    | "inherit";
 }
 
-function CustomLink({ to, color, text, underline }: ILink) {
+function CustomLink({ to, color, text, underline, variant }: ILink) {
   const navigate = useNavigate();
 
   return (
     <Link
+      variant={variant ? variant : "body1"}
       underline={underline ? underline : "hover"}
       color={color}
       onClick={() => navigate(to)}

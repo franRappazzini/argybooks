@@ -1,3 +1,5 @@
+import "./CreateBook.scss";
+
 import { createBook, uploadBook, uploadBookCover } from "../../../redux/actions/bookActions";
 import { useEffect, useState } from "react";
 
@@ -101,20 +103,22 @@ function CreateBook() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="component max_width">
-      <InputsBookContainer
-        data={data}
-        setData={setData}
-        handleChange={handleChange}
-        handleImage={handleImage}
-        handleFile={handleFile}
-      />
+    <form onSubmit={handleSubmit} className="form_component component">
+      <section className="max_width">
+        <InputsBookContainer
+          data={data}
+          setData={setData}
+          handleChange={handleChange}
+          handleImage={handleImage}
+          handleFile={handleFile}
+        />
 
-      {imgPreview && <img src={imgPreview} alt={data.name} />}
+        {imgPreview && <img src={imgPreview} alt={data.name} />}
 
-      <LoadingButton loading={loading} variant="contained" type="submit">
-        Enviar
-      </LoadingButton>
+        <LoadingButton loading={loading} variant="contained" type="submit">
+          Enviar
+        </LoadingButton>
+      </section>
     </form>
   );
 }

@@ -24,7 +24,7 @@ function InputsBookContainer({
 }: InputValues) {
   return (
     <>
-      <section className="inputs-book_container ">
+      <section className="inputs-book_container">
         <TextField
           size="small"
           label="Autor*"
@@ -43,7 +43,9 @@ function InputsBookContainer({
           onChange={handleChange}
         />
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Idioma*</InputLabel>
+          <InputLabel id="demo-simple-select-label" size="small">
+            Idioma*
+          </InputLabel>
           <Select
             labelId="demo-simple-select-label"
             value={data.language}
@@ -60,7 +62,7 @@ function InputsBookContainer({
           </Select>
         </FormControl>
 
-        {/* para seleccionar varias categorias */}
+        {/* para seleccionar varias categorías */}
         <CheckmarkBook data={data} setData={setData} />
 
         <div className="file-input_container">
@@ -72,6 +74,7 @@ function InputsBookContainer({
           <input type="file" accept=".pdf" id="file" onChange={handleFile} />
         </div>
       </section>
+
       <TextField
         size="small"
         label="Descripción"
