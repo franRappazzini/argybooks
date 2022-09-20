@@ -3,6 +3,7 @@ import {
   BelongsTo,
   BelongsToMany,
   Column,
+  DataType,
   Default,
   ForeignKey,
   HasMany,
@@ -35,8 +36,9 @@ export class Book extends Model {
   @AllowNull(false)
   @Column
   declare description: string;
+
   @Default(0)
-  @Column
+  @Column(DataType.FLOAT)
   declare rating: number;
 
   @BelongsTo(() => Author)

@@ -34,6 +34,7 @@ export const GetDetailBookHook = () => {
   const { book, loading } = useAppSelector((state) => state.book);
 
   const getBookDetail = (id: string | undefined) => dispatch(getBook(id));
+  // const setLoader = (setter: boolean) => dispatch(setLoading(setter));
 
   useEffect(() => {
     dispatch(setLoading(true));

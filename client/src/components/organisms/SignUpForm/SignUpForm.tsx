@@ -47,7 +47,7 @@ function SignUpForm() {
       AlertBasic("Felicidades!", "Usuario creado con éxito", "success");
       setData(initial);
       setLoading(false);
-      navigate("/");
+      navigate(-1);
     } catch (err) {
       setLoading(false);
       if (axios.isAxiosError(err)) return AlertBasic("Error!", err.message, "error");

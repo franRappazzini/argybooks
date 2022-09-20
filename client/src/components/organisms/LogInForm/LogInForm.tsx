@@ -45,7 +45,7 @@ function LogInForm() {
       AlertBasic("Felicidades!", "Ingreso correcto", "success");
       setData(initial);
       setLoading(false);
-      navigate("/", { state: { fromLogIn: true } });
+      navigate(-1);
     } catch (err) {
       setLoading(false);
       return AlertBasic("", "Email o contraseña incorrectos, vuelva a intentarlo", "error");

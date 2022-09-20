@@ -21,7 +21,7 @@ function Detail() {
       {loading ? (
         <CircularProgress sx={{ mt: "2rem" }} />
       ) : book && Object.values(book).length > 0 ? (
-        <DetailContainer {...book} />
+        <DetailContainer book={book} getBookDetail={getBookDetail} />
       ) : (
         <p>Lo sentimos, no se encontró coincidencia</p>
       )}

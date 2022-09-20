@@ -14,7 +14,7 @@ function MenuHeader({ username }: CompleteUser) {
   const handleClose = () => setAnchorEl(null);
   const handleLogOut = () => {
     localStorage.removeItem("lsLoggedUser");
-    window.location.href = "/";
+    window.location.reload();
   };
 
   return (

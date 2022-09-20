@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { CompleteBook, ICreateReview } from "../../../utils/interfaces";
 import { Favorite, FavoriteBorderOutlined, StarBorderOutlined } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
@@ -19,20 +20,15 @@ import axios from "axios";
 import { createReview } from "../../../redux/actions/reviewActions";
 import { downloadBook } from "../../../redux/actions/bookActions";
 import { useAppSelector } from "../../../redux/hooks";
-import { useState } from "react";
+
+interface Props {
+  book: CompleteBook;
+  getBookDetail: (id: string) => void;
+}
 
 // TODO modularizar este componente
-function BookDetailContainer({
-  id,
-  name,
-  author,
-  description,
-  year,
-  rating,
-  image,
-  categories,
-  language,
-}: CompleteBook) {
+function BookDetailContainer({ book, getBookDetail }: Props) {
+  const { id, name, author, description, year, rating, image, categories, language } = book;
   const { loggedUser } = useAppSelector((state) => state.user);
   const [valuation, setValuation] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -48,18 +44,24 @@ function BookDetailContainer({
     try {
       // TODO si esto sale bien, tengo que actualizar el book para que traiga el nuevo rating
       // TODO fijarme que tiene que quedar marcado por default la valuation si el user ya hizo review
-      createReview(newReview);
+      await createReview(newReview);
+      getBookDetail(id.toString());
     } catch (err) {
-      if (axios.isAxiosError(err)) return AlertBasic("Error", err.message, "error");
-      else return AlertBasic("Error", "Lo sentimos, no su pudo cargar su valoración", "error");
+      if (axios.isAxiosError(err)) AlertBasic("Error", err.message, "error");
+      else AlertBasic("Error", "Lo sentimos, no su pudo cargar su valoración", "error");
     }
 
     setLoading(false);
   };
+
   const handleToggleFavorite = () => setFavorite(!favorite);
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
   const handleDownload = () => downloadBook(name);
+
+  useEffect(() => {
+    console.log(book);
+  }, [book]);
 
   return (
     <section className="book_detail">
