@@ -1,6 +1,16 @@
-import { AllowNull, Column, HasMany, IsEmail, Model, Table, Unique } from "sequelize-typescript";
+import {
+  AllowNull,
+  BelongsToMany,
+  Column,
+  HasMany,
+  IsEmail,
+  Model,
+  Table,
+  Unique,
+} from "sequelize-typescript";
 
 import { Book } from "./Book";
+import { Favorite } from "./Favorite";
 import { Review } from "./Review";
 import { hash } from "../../utils/functions";
 
@@ -27,6 +37,9 @@ export class User extends Model {
 
   @HasMany(() => Book)
   declare books: Book[];
+
+  @HasMany(() => Favorite)
+  declare favorites: Favorite[];
 
   //   declare password: string;
 

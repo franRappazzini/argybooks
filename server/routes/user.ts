@@ -1,3 +1,4 @@
+import { Favorite } from "../db/models/Favorite";
 import { Review } from "../db/models/Review";
 import { Router } from "express";
 import { User } from "../db/models/User";
@@ -8,7 +9,7 @@ user.post("", async (req, res) => {
   const { email, password, username } = req.body;
 
   try {
-    const response = await User.create({ email, password, username });
+    const response = await User.create({ email, password, username }, { include: Review });
     res.status(201).json({ message: "User created successfully!", response });
   } catch (err) {
     res.status(400).json(err);
@@ -17,7 +18,9 @@ user.post("", async (req, res) => {
 
 user.get("", async (req, res) => {
   try {
-    const response = await User.findAll({ include: Review });
+    const response = await User.findAll({
+      include: [{ model: Review }, { model: Favorite }],
+    });
     res.json(response);
   } catch (err) {
     res.status(404).json(err);
@@ -30,7 +33,7 @@ user.get("/logged", async (req, res) => {
   try {
     const response = await User.findOne({
       where: { email, password },
-      include: Review,
+      include: [{ model: Review }, { model: Favorite }],
       rejectOnEmpty: true,
     });
     res.json(response);

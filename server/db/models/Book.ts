@@ -15,6 +15,7 @@ import {
 import { Author } from "./Author";
 import { Books_Categories } from "./Books_Categories";
 import { Category } from "./Category";
+import { Favorite } from "./Favorite";
 import { Review } from "./Review";
 import { User } from "./User";
 
@@ -57,6 +58,9 @@ export class Book extends Model {
 
   @HasMany(() => Review)
   declare reviews: Review[];
+
+  @HasMany(() => Favorite)
+  declare favorites: Favorite[];
 
   @BelongsToMany(() => Category, () => Books_Categories)
   declare categories: Category[];

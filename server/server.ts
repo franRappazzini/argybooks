@@ -4,6 +4,7 @@ import book from "./routes/book";
 import category from "./routes/category";
 import cors from "cors";
 import express from "express";
+import favorite from "./routes/favorite";
 import fileupload from "express-fileupload";
 import morgan from "morgan";
 import review from "./routes/review";
@@ -25,6 +26,7 @@ server.use("/category", category);
 server.use("/user", user);
 server.use("/author", author);
 server.use("/review", review);
+server.use("/favorite", favorite);
 
 const port = 3001;
 server.listen(port, () => {
