@@ -1,5 +1,7 @@
-import { AllowNull, Column, DataType, IsEmail, Model, Table, Unique } from "sequelize-typescript";
+import { AllowNull, Column, HasMany, IsEmail, Model, Table, Unique } from "sequelize-typescript";
 
+import { Book } from "./Book";
+import { Review } from "./Review";
 import { hash } from "../../utils/functions";
 
 @Table
@@ -19,6 +21,13 @@ export class User extends Model {
   set password(value: string) {
     this.setDataValue("password", hash(value));
   }
+
+  @HasMany(() => Review)
+  declare reviews: Review[];
+
+  @HasMany(() => Book)
+  declare books: Book[];
+
   //   declare password: string;
 
   // @BelongsToMany(() => Category, () => Books_Categories)

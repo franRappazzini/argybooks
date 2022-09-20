@@ -1,3 +1,4 @@
+import { Review } from "../db/models/Review";
 import { Router } from "express";
 import { User } from "../db/models/User";
 import { hash } from "./../utils/functions";
@@ -17,7 +18,7 @@ user.post("", async (req, res) => {
 
 user.get("", async (req, res) => {
   try {
-    const response = await User.findAll();
+    const response = await User.findAll({ include: Review });
     res.json(response);
   } catch (err) {
     res.status(404).json(err);

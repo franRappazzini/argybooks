@@ -9,6 +9,7 @@ import Header from "./components/organisms/Header/Header";
 import Home from "./components/pages/Home/Home";
 import IsLogged from "./components/pages/IsLogged/IsLogged";
 import LogIn from "./components/pages/LogIn/LogIn";
+import Profile from "./components/pages/Profile/Profile";
 import SignUp from "./components/pages/SignUp/SignUp";
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
         <Route path="/book/:bookId" element={<Detail />} />
 
         <Route path="/create_book" element={<CreateBook />} />
+
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );

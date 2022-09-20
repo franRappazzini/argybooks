@@ -13,3 +13,5 @@ export enum otherActions {
   GET_CATEGORIES = "GET_CATEGORIES",
   GET_AUTHORS = "GET_AUTHORS",
 }
+
+export enum reviewActions {}

@@ -10,6 +10,7 @@ import InputsBookContainer from "../../molecules/InputsBookContainer/InputsBookC
 import LoadingButton from "@mui/lab/LoadingButton";
 import axios from "axios";
 import { bookValidations } from "../../../utils/functions";
+import { useAppSelector } from "../../../redux/hooks";
 import { useNavigate } from "react-router-dom";
 
 const initial = {
@@ -23,6 +24,8 @@ const initial = {
 };
 
 function CreateBook() {
+  // const { loggedUser } = GetLoggedUserHook();
+  const { loggedUser } = useAppSelector((state) => state.user);
   const [data, setData] = useState<ICreateBook>(initial);
   const [file, setFile] = useState<any>();
   const [image, setImage] = useState<any>();
@@ -32,7 +35,8 @@ function CreateBook() {
 
   useEffect(() => {
     console.log(data);
-  }, [data]);
+    console.log(loggedUser);
+  }, [data, loggedUser]);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -52,6 +56,7 @@ function CreateBook() {
       const newBook = {
         ...data,
         image: coverRes.data.url,
+        userId: loggedUser.id,
       };
 
       const bookFile = new FormData();
@@ -67,9 +72,7 @@ function CreateBook() {
         title: "Creado!",
         text: "Libro creado exitosamente",
         icon: "success",
-        onConfirm() {
-          navigate(`/book/${res.data.response.id}`);
-        },
+        onConfirm: () => navigate(`/book/${res.data.response.id}`),
       });
     } catch (err) {
       setLoading(false);

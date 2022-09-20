@@ -1,21 +1,64 @@
 import "./BookDetailContainer.scss";
 
-import { Breadcrumbs, Button, Typography } from "@mui/material";
+import {
+  Breadcrumbs,
+  Button,
+  CircularProgress,
+  IconButton,
+  Menu,
+  MenuItem,
+  Rating,
+  Typography,
+} from "@mui/material";
+import { CompleteBook, ICreateReview } from "../../../utils/interfaces";
+import { Favorite, FavoriteBorderOutlined, StarBorderOutlined } from "@mui/icons-material";
 
-import { CompleteBook } from "../../../utils/interfaces";
+import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
+import axios from "axios";
+import { createReview } from "../../../redux/actions/reviewActions";
 import { downloadBook } from "../../../redux/actions/bookActions";
+import { useAppSelector } from "../../../redux/hooks";
+import { useState } from "react";
 
+// TODO modularizar este componente
 function BookDetailContainer({
+  id,
   name,
-  image,
   author,
-  rating,
-  categories,
   description,
   year,
+  rating,
+  image,
+  categories,
   language,
 }: CompleteBook) {
+  const { loggedUser } = useAppSelector((state) => state.user);
+  const [valuation, setValuation] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [favorite, setFavorite] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleValuation = async (num: number) => {
+    setValuation(num);
+    setLoading(true);
+
+    const newReview: ICreateReview = { userId: loggedUser.id, bookId: id, rating: num };
+    try {
+      // TODO si esto sale bien, tengo que actualizar el book para que traiga el nuevo rating
+      // TODO fijarme que tiene que quedar marcado por default la valuation si el user ya hizo review
+      createReview(newReview);
+    } catch (err) {
+      if (axios.isAxiosError(err)) return AlertBasic("Error", err.message, "error");
+      else return AlertBasic("Error", "Lo sentimos, no su pudo cargar su valoración", "error");
+    }
+
+    setLoading(false);
+  };
+  const handleToggleFavorite = () => setFavorite(!favorite);
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
+  const handleClose = () => setAnchorEl(null);
   const handleDownload = () => downloadBook(name);
 
   return (
@@ -27,8 +70,6 @@ function BookDetailContainer({
 
       <article className="article_container">
         <div style={{ backgroundImage: `url(${image})` }} className="img_detail"></div>
-        {/* <img src={image} alt={name} /> */}
-
         <section className="details">
           <Typography variant="h4" component="h1">
             {name}
@@ -36,8 +77,65 @@ function BookDetailContainer({
           <Typography variant="body1" sx={{ fontStyle: "italic", m: "1rem 0" }}>
             <CustomLink to="/" color="primary" text={author.name} />
           </Typography>
-          <Typography variant="body1">rating: {rating} / comentarios</Typography>
-          <Typography variant="body1" sx={{ m: "0.7rem 0" }}>
+          <div className="rating-favorite">
+            <IconButton
+              aria-label="Valorar"
+              onClick={handleClick}
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <StarBorderOutlined />
+            </IconButton>
+            <Menu
+              elevation={4}
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{ "aria-labelledby": "basic-button" }}
+            >
+              <MenuItem sx={{ display: "flex", flexDirection: "column" }}>
+                {loggedUser && Object.keys(loggedUser).length > 0 ? (
+                  <>
+                    <Typography variant="body2">Que tanto le ha gustado este libro?</Typography>
+                    {!loading ? (
+                      <Rating
+                        name="half-rating"
+                        precision={0.5}
+                        value={valuation}
+                        onChange={(e, v) => handleValuation(v || 0)}
+                      />
+                    ) : (
+                      <CircularProgress size={20} />
+                    )}
+                  </>
+                ) : (
+                  <Typography variant="body2">
+                    Debe{" "}
+                    <CustomLink
+                      to="/log_in"
+                      color="primary"
+                      text="iniciar sesión"
+                      variant="body2"
+                    />{" "}
+                    para poder valorar
+                  </Typography>
+                )}
+              </MenuItem>
+            </Menu>
+            <Typography variant="body1" sx={{ mr: "0.5rem" }}>
+              Rating: {rating} / Comentarios: 99
+            </Typography>
+            <IconButton
+              aria-label={favorite ? "Quitar de favoritos" : "Agregar a favoritos"}
+              onClick={handleToggleFavorite}
+            >
+              {favorite ? <Favorite color="error" /> : <FavoriteBorderOutlined />}
+            </IconButton>
+          </div>
+          <Typography variant="body1" sx={{ m: "0.7rem 0 2rem 0" }}>
             {description}
           </Typography>
 

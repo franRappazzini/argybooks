@@ -1,4 +1,6 @@
-.img_card-book {
-  height: 8rem;
-  object-fit: contain;
+.card_book {
+  .header_title {
+    display: flex;
+    justify-content: space-between;
+  }
 }

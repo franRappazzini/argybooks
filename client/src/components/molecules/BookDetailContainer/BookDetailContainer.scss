@@ -11,6 +11,11 @@
     }
 
     .details {
+      .rating-favorite {
+        display: flex;
+        align-items: center;
+      }
+
       .more_details {
         display: grid;
         grid-template-columns: repeat(2, 1fr);

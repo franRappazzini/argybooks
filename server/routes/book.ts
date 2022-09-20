@@ -2,7 +2,9 @@ import { Author } from "./../db/models/Author";
 import { Book } from "../db/models/Book";
 import { Category } from "../db/models/Category";
 import { Op } from "../db/db";
+import { Review } from "../db/models/Review";
 import { Router } from "express";
+import { User } from "../db/models/User";
 
 const book = Router();
 
@@ -14,16 +16,20 @@ interface POSTReqBody {
   language: string;
   description: string;
   categories: string[];
+  userId: number;
 }
 
 book.post("", async (req, res) => {
-  const { author, name, year, image, language, description, categories }: POSTReqBody = req.body;
+  const { author, name, year, image, language, description, categories, userId }: POSTReqBody =
+    req.body;
   const newBook = { name: name.split(".")[0], year, image, language, description };
 
   try {
     // busca o crea el author
     const authorOptions = { where: { name: author }, defaults: { name: author } };
-    const [find, created] = await Author.findOrCreate(authorOptions);
+    const [authorFind, created] = await Author.findOrCreate(authorOptions);
+    // busca el user
+    const userFind = await User.findByPk(userId, { rejectOnEmpty: true });
     // trae los id de las categories
     const catOptions = { where: { name: { [Op.or]: categories } }, attributes: ["id"] };
     const categoriesId = await Category.findAll(catOptions);
@@ -31,8 +37,9 @@ book.post("", async (req, res) => {
     const response = await Book.create(newBook);
 
     // agrega sus relaciones
-    response.$add("Category", categoriesId);
-    find.$add("Book", response.id);
+    await response.$add("Category", categoriesId);
+    await userFind.$add("Book", response.id);
+    await authorFind.$add("Book", response.id);
 
     res.status(201).json({ message: "Book created successfully!", response });
   } catch (err) {
@@ -43,8 +50,11 @@ book.post("", async (req, res) => {
 book.get("", async (req, res) => {
   const { name, category, author } = req.query;
 
+  let options = {
+    where: { [Op.and]: {} },
+    include: [{ model: Category }, { model: Author }, { model: Review }],
+  };
   try {
-    let options = { where: { [Op.and]: {} }, include: [{ model: Category }, { model: Author }] };
     if (name) {
       // busco si existe ese autor
       const authorOptions = { where: { name: { [Op.iLike]: `%${name}%` } }, attributes: ["id"] };
@@ -75,8 +85,10 @@ book.get("", async (req, res) => {
 book.get("/:id", async (req, res) => {
   const { id } = req.params;
 
+  const options = { include: [{ model: Category }, { model: Author }, { model: Review }] };
+
   try {
-    const response = await Book.findByPk(id, { include: [{ model: Category }, { model: Author }] });
+    const response = await Book.findByPk(id, options);
     res.json(response);
   } catch (err) {
     res.status(404).json({ message: err });

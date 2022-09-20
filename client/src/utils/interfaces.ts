@@ -54,7 +54,6 @@ export interface ICreateBook {
 }
 
 // USER
-
 export interface ICreateUser {
   email: string;
   username: string;
@@ -75,4 +74,11 @@ export interface CompleteUser {
   password: string;
   createdAt: string;
   updatedAt: string;
+}
+
+// REVIEW
+export interface ICreateReview {
+  rating: number;
+  userId: number;
+  bookId: number;
 }

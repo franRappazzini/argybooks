@@ -69,7 +69,7 @@ export const GetLoggedUserHook = () => {
   }, [lsLoggedUser, dispatch]);
 
   const setLoggedUser = (user: CompleteUser) => dispatch(setUser(user));
-  const findLoggedUser = (user: ILogInUser) => findUser(user);
+  const findLoggedUser = (user: ILogInUser) => findUser(user); // para iniciar sesión
 
   return { loggedUser, setLoggedUser, findLoggedUser };
 };

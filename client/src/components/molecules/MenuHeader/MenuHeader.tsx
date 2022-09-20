@@ -2,11 +2,13 @@ import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } fr
 import { Logout, Settings } from "@mui/icons-material";
 
 import { CompleteUser } from "../../../utils/interfaces";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function MenuHeader({ username }: CompleteUser) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -64,7 +66,7 @@ function MenuHeader({ username }: CompleteUser) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <MenuItem onClick={() => navigate("/profile")}>
           <Avatar /> Perfil
         </MenuItem>
         <Divider />

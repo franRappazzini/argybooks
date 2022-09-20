@@ -6,7 +6,7 @@ import RecommendedBooks from "../../molecules/RecommendedBooks/RecommendedBooks"
 
 function DetailContainer(book: CompleteBook, search: string) {
   return (
-    <section className="detail_container">
+    <section className="detail_container max_width">
       <BookDetailContainer {...book} />
 
       <RecommendedBooks />

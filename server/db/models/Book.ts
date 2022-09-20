@@ -5,6 +5,7 @@ import {
   Column,
   Default,
   ForeignKey,
+  HasMany,
   Model,
   Table,
   Unique,
@@ -13,6 +14,8 @@ import {
 import { Author } from "./Author";
 import { Books_Categories } from "./Books_Categories";
 import { Category } from "./Category";
+import { Review } from "./Review";
+import { User } from "./User";
 
 @Table
 export class Book extends Model {
@@ -36,13 +39,23 @@ export class Book extends Model {
   @Column
   declare rating: number;
 
-  @BelongsToMany(() => Category, () => Books_Categories)
-  declare categories: Category[];
+  @BelongsTo(() => Author)
+  declare author: Author;
 
   @ForeignKey(() => Author)
   @Column
   declare authorId: number;
 
-  @BelongsTo(() => Author)
-  declare author: Author;
+  @BelongsTo(() => User)
+  declare createdBy: User;
+
+  @ForeignKey(() => User)
+  @Column
+  declare userId: number;
+
+  @HasMany(() => Review)
+  declare reviews: Review[];
+
+  @BelongsToMany(() => Category, () => Books_Categories)
+  declare categories: Category[];
 }

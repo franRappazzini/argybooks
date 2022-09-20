@@ -8,8 +8,8 @@ const initialState = {
 
 const userReducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
-    case userActions.GET_ALL_USERS:
-      return { ...state, loggedUser: action.payload };
+    // case userActions.GET_ALL_USERS:
+    //   return { ...state, loggedUser: action.payload };
     case userActions.SET_USER:
       return { ...state, loggedUser: action.payload };
     default:

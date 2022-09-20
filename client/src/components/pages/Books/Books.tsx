@@ -10,6 +10,7 @@ function Books() {
   const { books, loading } = GetBooksHook();
 
   // TODO revisar re render aca (con 3g slow)
+  // TODO revisar que queda el loading cuando voy al home y vuelvo a esta pagina => creo que porque el home también pide este hooks
 
   return (
     <main className="books_component component">
