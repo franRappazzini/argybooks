@@ -25,9 +25,12 @@ review.post("", async (req, res) => {
       await userFind.$add("Review", bookId);
       await bookFind.$add("Review", userId);
     } else {
-      // actualizo el rating
+      // actualizo el rating del review y user
       response.rating = rating;
+      // const userReview = userFind.reviews.find((r) => r.bookId === bookId);
+      // if (userReview) userReview.rating = rating;
       await response.save();
+      // await userFind.save();
     }
 
     // vuelvo a buscarlo para actualizar el rating

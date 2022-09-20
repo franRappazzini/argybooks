@@ -15,17 +15,11 @@ export const createUser = async (user: ICreateUser) => {
   }
 };
 
-// export const setLoggedUser = (user: object) => {
-//   return (dispatch: Dispatch) => dispatch({ type: userActions.SET_LOGGED_USER, payload: user });
-// };
-
 export const setUser = (user: CompleteUser) => {
   return (dispatch: Dispatch) => dispatch({ type: userActions.SET_USER, payload: user });
 };
 
-export const findUser = async (user: ILogInUser) => {
-  const { email, password } = user;
-
+export const findUser = async ({ email, password }: ILogInUser) => {
   try {
     const { data } = await axios.get(URL + `/logged?email=${email}&password=${password}`);
     return data;

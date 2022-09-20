@@ -6,8 +6,6 @@ import { bookActions } from "../../utils/enums";
 const URL = "http://localhost:3001/book";
 
 export const getAllBooks = (data?: SearchBook) => {
-  // const { search, category, author } = data;
-
   return async (dispatch: Dispatch) => {
     // completo la query
     let url = URL + `?`;

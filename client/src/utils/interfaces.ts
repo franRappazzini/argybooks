@@ -72,6 +72,7 @@ export interface CompleteUser {
   username: string;
   email: string;
   password: string;
+  reviews: CompleteReview[];
   createdAt: string;
   updatedAt: string;
 }
@@ -81,4 +82,13 @@ export interface ICreateReview {
   rating: number;
   userId: number;
   bookId: number;
+}
+
+export interface CompleteReview {
+  id: number;
+  rating: number;
+  userId: number;
+  bookId: number;
+  createdAt: string;
+  updatedAt: string;
 }

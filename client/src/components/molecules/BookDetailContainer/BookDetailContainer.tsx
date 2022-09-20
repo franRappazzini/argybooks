@@ -10,7 +10,12 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
-import { CompleteBook, ICreateReview } from "../../../utils/interfaces";
+import {
+  CompleteBook,
+  CompleteReview,
+  CompleteUser,
+  ICreateReview,
+} from "../../../utils/interfaces";
 import { Favorite, FavoriteBorderOutlined, StarBorderOutlined } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 
@@ -42,7 +47,6 @@ function BookDetailContainer({ book, getBookDetail }: Props) {
 
     const newReview: ICreateReview = { userId: loggedUser.id, bookId: id, rating: num };
     try {
-      // TODO si esto sale bien, tengo que actualizar el book para que traiga el nuevo rating
       // TODO fijarme que tiene que quedar marcado por default la valuation si el user ya hizo review
       await createReview(newReview);
       getBookDetail(id.toString());
@@ -53,7 +57,6 @@ function BookDetailContainer({ book, getBookDetail }: Props) {
 
     setLoading(false);
   };
-
   const handleToggleFavorite = () => setFavorite(!favorite);
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -61,7 +64,14 @@ function BookDetailContainer({ book, getBookDetail }: Props) {
 
   useEffect(() => {
     console.log(book);
-  }, [book]);
+    console.log(loggedUser);
+    if (loggedUser && Object.keys(loggedUser).length > 0) {
+      const userReview: CompleteReview | undefined = loggedUser.reviews.find(
+        (r: CompleteReview) => r.bookId === id
+      );
+      if (userReview) setValuation(userReview.rating);
+    }
+  }, [book, id, loggedUser]);
 
   return (
     <section className="book_detail">

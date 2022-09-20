@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { hash, userLogInValidations } from "../../../utils/functions";
 
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
@@ -19,7 +20,6 @@ import { ILogInUser } from "../../../utils/interfaces";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { userLogInValidations } from "../../../utils/functions";
 
 const initial = { email: "", password: "", showPass: false };
 
@@ -38,7 +38,8 @@ function LogInForm() {
     setLoading(true);
 
     try {
-      const res = await findLoggedUser(data);
+      const hashedPass = await hash(data.password);
+      const res = await findLoggedUser({ ...data, password: hashedPass });
       localStorage.setItem("lsLoggedUser", JSON.stringify(res));
       setLoggedUser(res);
       // TODO crear toast para esto
