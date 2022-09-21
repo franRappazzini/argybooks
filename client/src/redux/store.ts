@@ -1,5 +1,6 @@
 import bookReducer from "./reducers/bookReducer";
 import { configureStore } from "@reduxjs/toolkit";
+import favoriteReducer from "./reducers/favoriteReducer";
 import otherReducer from "./reducers/otherReducer";
 import userReducer from "./reducers/userReducer";
 
@@ -9,6 +10,7 @@ const store = configureStore({
   reducer: {
     book: bookReducer,
     user: userReducer,
+    favorite: favoriteReducer,
     other: otherReducer,
   },
 });

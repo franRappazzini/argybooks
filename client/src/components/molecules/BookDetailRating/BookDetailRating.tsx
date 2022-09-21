@@ -1,38 +1,44 @@
 import "./BookDetailRating.scss";
 
 import { CircularProgress, IconButton, Menu, MenuItem, Rating, Typography } from "@mui/material";
-import { CompleteReview, ICreateReview } from "../../../utils/interfaces";
+import { CompleteBook, CompleteReview, ICreateReview } from "../../../utils/interfaces";
 import { Favorite, FavoriteBorderOutlined, StarBorderOutlined } from "@mui/icons-material";
+import { FavoriteHook, UserHook } from "../../../utils/customHooks";
 import { useEffect, useState } from "react";
 
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
 import axios from "axios";
 import { createReview } from "../../../redux/actions/reviewActions";
-import { useAppSelector } from "../../../redux/hooks";
 
 interface Props {
-  id: number;
-  rating: number;
+  book: CompleteBook;
   getBookDetail: (id: string) => void;
 }
 
-function BookDetailRating({ rating, id, getBookDetail }: Props) {
-  const { loggedUser } = useAppSelector((state) => state.user);
+function BookDetailRating({ book, getBookDetail }: Props) {
+  const { id, rating } = book;
+  const { loggedUser } = UserHook();
+  const { favorites, addToFav, removeToFav } = FavoriteHook();
   const [valuation, setValuation] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [favorite, setFavorite] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   useEffect(() => {
+    // si esta logueado y voto se lo agrego al render
     if (loggedUser && Object.keys(loggedUser).length > 0) {
       const userReview = loggedUser.reviews?.find((r: CompleteReview) => r.bookId === id);
       if (userReview) setValuation(userReview.rating);
     }
   }, [id, loggedUser]);
 
-  const handleToggleFavorite = async () => setFavorite(!favorite);
+  const verifyIsInFav = () => {
+    const findFav = favorites.find((b) => b.id === id);
+    return findFav ? true : false;
+  };
+  const handleAddFav = () => addToFav(book);
+  const handleRemoveFav = () => removeToFav(id);
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
@@ -100,12 +106,16 @@ function BookDetailRating({ rating, id, getBookDetail }: Props) {
       <Typography variant="body1" sx={{ mr: "0.5rem" }}>
         Rating: {rating} / Comentarios: 99
       </Typography>
-      <IconButton
-        aria-label={favorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-        onClick={handleToggleFavorite}
-      >
-        {favorite ? <Favorite color="error" /> : <FavoriteBorderOutlined />}
-      </IconButton>
+
+      {verifyIsInFav() ? (
+        <IconButton aria-label="Quitar de favoritos" onClick={handleRemoveFav}>
+          <Favorite color="error" />
+        </IconButton>
+      ) : (
+        <IconButton aria-label="Agregar a favoritos" onClick={handleAddFav}>
+          <FavoriteBorderOutlined />
+        </IconButton>
+      )}
     </section>
   );
 }

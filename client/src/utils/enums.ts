@@ -15,3 +15,9 @@ export enum otherActions {
 }
 
 export enum reviewActions {}
+
+export enum favoriteActions {
+  GET_FAVORITES = "GET_FAVORITES",
+  ADD_FAVORITE = "ADD_FAVORITE",
+  REMOVE_FAVORITE = "REMOVE_FAVORITE",
+}

@@ -9,10 +9,7 @@
     .nav_header {
       display: flex;
       align-items: center;
-
-      :first-child {
-        margin-right: 1rem;
-      }
+      grid-gap: 1.5rem;
     }
 
     .link_home {

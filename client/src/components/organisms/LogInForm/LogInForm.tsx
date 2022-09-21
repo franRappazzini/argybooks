@@ -15,9 +15,9 @@ import { hash, userLogInValidations } from "../../../utils/functions";
 
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
-import { GetLoggedUserHook } from "../../../utils/customHooks";
 import { ILogInUser } from "../../../utils/interfaces";
 import { LoadingButton } from "@mui/lab";
+import { UserHook } from "../../../utils/customHooks";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -27,7 +27,7 @@ function LogInForm() {
   const [data, setData] = useState<ILogInUser>(initial);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { setLoggedUser, findLoggedUser } = GetLoggedUserHook();
+  const { setLoggedUser, findLoggedUser } = UserHook();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();

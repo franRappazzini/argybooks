@@ -1,17 +1,17 @@
 import "./CreateBook.scss";
 
 import { createBook, uploadBook, uploadBookCover } from "../../../redux/actions/bookActions";
-import { useEffect, useState } from "react";
 
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import AlertOptions from "../../atoms/AlertOptions/AlertOptions";
 import { ICreateBook } from "../../../utils/interfaces";
 import InputsBookContainer from "../../molecules/InputsBookContainer/InputsBookContainer";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { UserHook } from "../../../utils/customHooks";
 import axios from "axios";
 import { bookValidations } from "../../../utils/functions";
-import { useAppSelector } from "../../../redux/hooks";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const initial = {
   name: "",
@@ -24,19 +24,13 @@ const initial = {
 };
 
 function CreateBook() {
-  // const { loggedUser } = GetLoggedUserHook();
-  const { loggedUser } = useAppSelector((state) => state.user);
+  const { loggedUser } = UserHook();
   const [data, setData] = useState<ICreateBook>(initial);
   const [file, setFile] = useState<any>();
   const [image, setImage] = useState<any>();
   const [imgPreview, setImgPreview] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    console.log(data);
-    console.log(loggedUser);
-  }, [data, loggedUser]);
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -84,11 +78,9 @@ function CreateBook() {
     setLoading(false);
     setData(initial);
   };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
-
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       const file = e.target.files[0];
@@ -96,7 +88,6 @@ function CreateBook() {
       setData({ ...data, name: file.name });
     }
   };
-
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       const file = e.target.files[0];

@@ -14,9 +14,9 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
-import { GetLoggedUserHook } from "../../../utils/customHooks";
 import { ICreateUser } from "../../../utils/interfaces";
 import { LoadingButton } from "@mui/lab";
+import { UserHook } from "../../../utils/customHooks";
 import axios from "axios";
 import { createUser } from "../../../redux/actions/userActions";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,7 @@ function SignUpForm() {
   const [data, setData] = useState<ICreateUser>(initial);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { setLoggedUser } = GetLoggedUserHook();
+  const { setLoggedUser } = UserHook();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();

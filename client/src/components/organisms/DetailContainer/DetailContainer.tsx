@@ -36,7 +36,7 @@ function DetailContainer({ book, getBookDetail, search }: Props) {
             <CustomLink to="/" color="primary" text={author.name} />
           </Typography>
 
-          <BookDetailRating {...book} getBookDetail={getBookDetail} />
+          <BookDetailRating book={book} getBookDetail={getBookDetail} />
 
           <Typography variant="body1" sx={{ m: "0.7rem 0 2rem 0" }}>
             {description}

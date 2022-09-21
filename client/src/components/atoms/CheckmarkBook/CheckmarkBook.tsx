@@ -9,8 +9,9 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-import { GetOthersHook } from "../../../utils/customHooks";
 import { ICreateBook } from "../../../utils/interfaces";
+import { OtherHook } from "../../../utils/customHooks";
+import { useEffect } from "react";
 
 interface Props {
   data: ICreateBook;
@@ -18,7 +19,12 @@ interface Props {
 }
 
 function CheckmarkBook({ data, setData }: Props) {
-  const { categories } = GetOthersHook();
+  const { categories, getAllAuthors, getAllCategories } = OtherHook();
+
+  useEffect(() => {
+    getAllAuthors();
+    getAllCategories();
+  }, []);
 
   const handleChange = (e: SelectChangeEvent<typeof data.categories>) => {
     setData({ ...data, categories: e.target.value });
@@ -38,7 +44,7 @@ function CheckmarkBook({ data, setData }: Props) {
         renderValue={(selected) => selected.join(", ")}
         size="small"
       >
-        {categories.map((cat) => (
+        {categories.map((cat: string) => (
           <MenuItem key={cat} value={cat}>
             <Checkbox checked={data.categories.indexOf(cat) > -1} />
             <ListItemText primary={cat} />

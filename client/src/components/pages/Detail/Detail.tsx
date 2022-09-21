@@ -1,8 +1,8 @@
 import "./Detail.scss";
 
+import { BookHook } from "../../../utils/customHooks";
 import { CircularProgress } from "@mui/material";
 import DetailContainer from "../../organisms/DetailContainer/DetailContainer";
-import { GetDetailBookHook } from "../../../utils/customHooks";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -10,9 +10,10 @@ import { useParams } from "react-router-dom";
 
 function Detail() {
   const { bookId } = useParams();
-  const { book, getBookDetail, loading } = GetDetailBookHook();
+  const { book, getBookDetail, loading, setLoader } = BookHook();
 
   useEffect(() => {
+    setLoader(true);
     getBookDetail(bookId);
   }, [bookId]);
 

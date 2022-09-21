@@ -1,12 +1,18 @@
 import "./CardHomeContainer.scss";
 
 import { BookHome } from "../../../utils/interfaces";
+import { BookHook } from "../../../utils/customHooks";
 import CardHome from "../../molecules/CardHome/CardHome";
 import { CircularProgress } from "@mui/material";
-import { GetBooksHook } from "../../../utils/customHooks";
+import { useEffect } from "react";
 
 function CardHomeContainer() {
-  const { books, loading } = GetBooksHook();
+  const { books, loading, getBooks, setLoader } = BookHook();
+
+  useEffect(() => {
+    setLoader(true);
+    getBooks();
+  }, []);
 
   return (
     <section className="card-home_container max_width">

@@ -1,76 +1,52 @@
-import { CompleteUser, ILogInUser, SearchBook } from "./interfaces";
+import { CompleteBook, CompleteUser, ILogInUser, SearchBook } from "./interfaces";
+import { addToFavorite, removeToFavorite } from "../redux/actions/favoriteActions";
 import { findUser, setUser } from "../redux/actions/userActions";
 import { getAllBooks, getBook, setLoading } from "./../redux/actions/bookActions";
 import { getAuthors, getCategories } from "../redux/actions/otherActions";
 import { useAppDispatch, useAppSelector } from "./../redux/hooks";
 
-import { useEffect } from "react";
-
-// BOOK
-export const GetBooksHook = () => {
+export const BookHook = () => {
   const dispatch = useAppDispatch();
-  const { books, loading } = useAppSelector((state) => state.book);
+  const { books, book, loading } = useAppSelector((state) => state.book);
 
-  useEffect(() => {
-    dispatch(setLoading(true));
-    dispatch(getAllBooks());
-  }, [dispatch]);
-
-  return { books, loading };
-};
-
-export const SearchBooksHook = () => {
-  const dispatch = useAppDispatch();
-  const { books, loading } = useAppSelector((state) => state.book);
-
-  const searchBook = (data: SearchBook) => dispatch(getAllBooks(data));
-  const setLoader = (setter: boolean) => dispatch(setLoading(setter));
-
-  return { searchBook, setLoader, books, loading };
-};
-
-export const GetDetailBookHook = () => {
-  const dispatch = useAppDispatch();
-  const { book, loading } = useAppSelector((state) => state.book);
-
+  const getBooks = (data?: SearchBook) => dispatch(getAllBooks(data));
   const getBookDetail = (id: string | undefined) => dispatch(getBook(id));
-  // const setLoader = (setter: boolean) => dispatch(setLoading(setter));
+  const setLoader = (setter: boolean) => dispatch(setLoading(true));
 
-  useEffect(() => {
-    dispatch(setLoading(true));
-  }, [dispatch]);
-
-  return { book, getBookDetail, loading };
+  return { books, book, setLoader, getBooks, getBookDetail, loading };
 };
 
-export const GetOthersHook = (): { categories: string[]; authors: string[] } => {
+export const OtherHook = () => {
   const dispatch = useAppDispatch();
   const { categories, authors } = useAppSelector((state) => state.other);
 
-  useEffect(() => {
-    dispatch(getCategories());
-    dispatch(getAuthors());
-  }, [dispatch]);
+  const getAllCategories = () => dispatch(getCategories());
+  const getAllAuthors = () => dispatch(getAuthors());
 
   return {
-    authors: authors.map((author: { id: number; name: string }) => author.name),
-    categories: categories.map((cat: { id: number; name: string }) => cat.name),
+    getAllCategories,
+    getAllAuthors,
+    authors: authors.map((author: { name: string }) => author.name),
+    categories: categories.map((cat: { name: string }) => cat.name),
   };
 };
 
-// USER
-export const GetLoggedUserHook = () => {
+export const UserHook = () => {
   const dispatch = useAppDispatch();
   const { loggedUser } = useAppSelector((state) => state.user);
-
-  const lsLoggedUser = localStorage.getItem("lsLoggedUser");
-
-  useEffect(() => {
-    lsLoggedUser && dispatch(setUser(JSON.parse(lsLoggedUser)));
-  }, [lsLoggedUser, dispatch]);
 
   const setLoggedUser = (user: CompleteUser) => dispatch(setUser(user));
   const findLoggedUser = (user: ILogInUser) => findUser(user); // para iniciar sesión
 
   return { loggedUser, setLoggedUser, findLoggedUser };
+};
+
+export const FavoriteHook = () => {
+  const { favorites } = useAppSelector((state) => state.favorite);
+  const dispatch = useAppDispatch();
+
+  const addToFav = (book: CompleteBook) => dispatch(addToFavorite(book));
+  const removeToFav = (id: number) => dispatch(removeToFavorite(id));
+
+  return { favorites, addToFav, removeToFav };
 };
