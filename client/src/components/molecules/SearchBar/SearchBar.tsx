@@ -2,7 +2,6 @@ import "./SearchBar.scss";
 
 import { BookHook, OtherHook } from "../../../utils/customHooks";
 import {
-  Box,
   FormControl,
   IconButton,
   InputAdornment,
@@ -83,6 +82,7 @@ function SearchBar() {
             value={data.category}
             onChange={handleChange}
           >
+            <MenuItem value="">Todas</MenuItem>
             {categories &&
               categories.length > 0 &&
               categories.map((cat: string) => (
@@ -105,6 +105,7 @@ function SearchBar() {
             value={data.author}
             onChange={handleChange}
           >
+            <MenuItem value="">Todos</MenuItem>
             {authors &&
               authors.length > 0 &&
               authors.map((author: string) => (

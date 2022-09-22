@@ -8,6 +8,7 @@ interface ILink {
   color: string;
   text: string;
   underline?: "none" | "always" | "hover";
+  onClick?: () => void;
   variant?:
     | "h1"
     | "h2"
@@ -25,15 +26,20 @@ interface ILink {
     | "inherit";
 }
 
-function CustomLink({ to, color, text, underline, variant }: ILink) {
+function CustomLink({ to, color, text, underline, onClick, variant }: ILink) {
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    onClick?.();
+    navigate(to);
+  };
 
   return (
     <Link
       variant={variant ? variant : "body1"}
       underline={underline ? underline : "hover"}
       color={color}
-      onClick={() => navigate(to)}
+      onClick={handleClick}
       className="custom_link"
     >
       {text}
