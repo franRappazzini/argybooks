@@ -5,7 +5,6 @@ import CardHomeContainer from "../../organisms/CardHomeContainer/CardHomeContain
 function Home() {
   return (
     <main className="home_component component">
-      Home
       <CardHomeContainer />
     </main>
   );

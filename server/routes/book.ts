@@ -82,6 +82,16 @@ book.get("", async (req, res) => {
   }
 });
 
+book.get("/top", async (req, res) => {
+  try {
+    const response = await Book.findAll({ order: [["rating", "DESC"]], limit: 50 });
+    res.json(response);
+  } catch (err) {
+    console.log(err);
+    res.status(404).json(err);
+  }
+});
+
 book.get("/:id", async (req, res) => {
   const { id } = req.params;
 

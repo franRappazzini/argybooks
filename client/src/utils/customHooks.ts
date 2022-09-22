@@ -1,19 +1,20 @@
 import { CompleteUser, ILogInUser, SearchBook } from "./interfaces";
 import { findUser, setUser } from "../redux/actions/userActions";
-import { getAllBooks, getBook, setLoading } from "./../redux/actions/bookActions";
+import { getAllBooks, getBook, getTopBooks, setLoading } from "./../redux/actions/bookActions";
 import { getAuthors, getCategories } from "../redux/actions/otherActions";
 import { getFavorites, toFavorite } from "../redux/actions/favoriteActions";
 import { useAppDispatch, useAppSelector } from "./../redux/hooks";
 
 export const BookHook = () => {
   const dispatch = useAppDispatch();
-  const { books, book, loading } = useAppSelector((state) => state.book);
+  const { books, book, topBooks, loading } = useAppSelector((state) => state.book);
 
   const getBooks = (data?: SearchBook) => dispatch(getAllBooks(data));
   const getBookDetail = (id: string | undefined) => dispatch(getBook(id));
+  const getTop50Books = () => dispatch(getTopBooks());
   const setLoader = (setter: boolean) => dispatch(setLoading(true));
 
-  return { books, book, setLoader, getBooks, getBookDetail, loading };
+  return { books, book, topBooks, setLoader, getBooks, getBookDetail, getTop50Books, loading };
 };
 
 export const OtherHook = () => {

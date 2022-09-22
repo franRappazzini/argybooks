@@ -33,6 +33,17 @@ export const getBook = (id: string | undefined) => {
   };
 };
 
+export const getTopBooks = () => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const { data } = await axios.get(URL + "/top");
+      dispatch({ type: bookActions.GET_TOP_BOOKS, payload: data });
+    } catch (err) {
+      throw err;
+    }
+  };
+};
+
 export const setLoading = (setter: boolean) => {
   return (dispatch: Dispatch) => dispatch({ type: bookActions.SET_LOADING, payload: setter });
 };

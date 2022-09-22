@@ -1,6 +1,7 @@
 export enum bookActions {
   GET_ALL_BOOKS = "GET_ALL_BOOKS",
   GET_BOOK = "GET_BOOK",
+  GET_TOP_BOOKS = "GET_TOP_BOOKS",
   SET_LOADING = "SET_LOADING",
 }
 

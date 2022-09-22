@@ -6,7 +6,6 @@ import { User } from "../db/models/User";
 
 const review = Router();
 
-// TODO ver lógica de cuando el user vuelve a tocar el rating (update)
 review.post("", async (req, res) => {
   const { userId, bookId, rating } = req.body;
   console.log(req.body);
@@ -20,7 +19,9 @@ review.post("", async (req, res) => {
       defaults: { rating, bookId, userId },
     });
 
-    if (rating === 0) await response.destroy(); // TODO esto esta MAL
+    console.log(response);
+
+    if (rating === 0) await response.destroy();
     else if (created) {
       // agrego relaciones
       await userFind.$add("Review", bookId);
