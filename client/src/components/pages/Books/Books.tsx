@@ -12,9 +12,6 @@ function Books() {
   const { books, loading, getBooks, setLoader } = BookHook();
   const { getAllAuthors, getAllCategories } = OtherHook();
 
-  // TODO revisar re render aca (con 3g slow)
-  // TODO revisar que queda el loading cuando voy al home y vuelvo a esta pagina => creo que porque el home también pide este hooks
-
   useEffect(() => {
     setLoader(true);
     getBooks();

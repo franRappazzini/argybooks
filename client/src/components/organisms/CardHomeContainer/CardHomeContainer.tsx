@@ -23,10 +23,11 @@ function CardHomeContainer() {
       </Typography>
 
       {loading ? (
-        <CircularProgress />
+        <div className="spinner_container">
+          <CircularProgress />
+        </div>
       ) : topBooks.length > 0 ? (
-        // <Box sx={{ width: 500, height: 450, overflowY: "scroll" }}>
-        <ImageList variant="masonry" cols={5} gap={8}>
+        <ImageList variant="masonry" cols={window.innerWidth > 660 ? 5 : 3} gap={8}>
           {topBooks.map((book: CompleteBook) => (
             <ImageListItem
               key={book.id}
@@ -43,7 +44,6 @@ function CardHomeContainer() {
           ))}
         </ImageList>
       ) : (
-        // {/* </Box> */}
         <p>Lo sentimos, aun no hay libros disponibles. Puedes cargar</p>
       )}
     </section>

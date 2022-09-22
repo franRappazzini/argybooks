@@ -44,7 +44,7 @@ function SearchBar() {
 
   return (
     <form onSubmit={handleSubmit} className="form_search-bar max_width">
-      <FormControl sx={{ minWidth: "25ch" }} variant="outlined">
+      <FormControl sx={{ minWidth: "25ch" }} variant="outlined" className="search_input">
         <InputLabel htmlFor="outlined-adornment-input" size="small">
           Buscar por título o autor
         </InputLabel>
@@ -56,6 +56,7 @@ function SearchBar() {
           value={data.search}
           onChange={handleChange}
           size="small"
+          autoComplete="off"
           endAdornment={
             <InputAdornment position="end">
               <IconButton aria-label="toggle" edge="end" type="submit">
@@ -68,9 +69,9 @@ function SearchBar() {
 
       {/* TODO crear componente para esto */}
       {/* TODO permitir des-seleccionar */}
-      <Box sx={{ display: "flex", gridGap: "1rem" }}>
+      <section className="selects_container">
         <FormControl sx={{ minWidth: "15ch" }}>
-          <InputLabel id="demo-simple-select-label" size="small">
+          <InputLabel id="demo-simple-select-label" size="small" className="search_select">
             Categoría
           </InputLabel>
           <Select
@@ -92,7 +93,7 @@ function SearchBar() {
           </Select>
         </FormControl>
         <FormControl sx={{ minWidth: "15ch" }}>
-          <InputLabel id="demo-simple-select-label2" size="small">
+          <InputLabel id="demo-simple-select-label2" size="small" className="search_select">
             Autor
           </InputLabel>
           <Select
@@ -113,7 +114,7 @@ function SearchBar() {
               ))}
           </Select>
         </FormControl>
-      </Box>
+      </section>
     </form>
   );
 }

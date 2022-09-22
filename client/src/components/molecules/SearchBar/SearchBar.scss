@@ -3,5 +3,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   width: 100%;
+
+  .selects_container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+
+  @media only screen and (max-width: 590px) {
+    .search_input {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .selects_container {
+      width: 100%;
+    }
+  }
 }

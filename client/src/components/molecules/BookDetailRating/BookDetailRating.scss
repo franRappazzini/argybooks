@@ -12,4 +12,8 @@
   span {
     display: flex;
   }
+
+  @media only screen and (max-width: 660px) {
+    grid-template-columns: 1fr;
+  }
 }
