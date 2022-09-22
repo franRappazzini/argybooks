@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import axios from "axios";
 import { favoriteActions } from "./../../utils/enums";
 
-const URL = "http://localhost:3001/favorite";
+const URL = "/favorite";
 
 export const toFavorite = async (userId: number, bookId: number) => {
   try {

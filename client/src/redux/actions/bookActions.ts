@@ -3,7 +3,7 @@ import { SearchBook } from "../../utils/interfaces";
 import axios from "axios";
 import { bookActions } from "../../utils/enums";
 
-const URL = "http://localhost:3001/book";
+const URL = "/book";
 
 export const getAllBooks = (data?: SearchBook) => {
   return async (dispatch: Dispatch) => {
@@ -59,7 +59,7 @@ export const createBook = async (data: object) => {
 
 export const uploadBook = async (file: unknown) => {
   try {
-    await axios.post("http://localhost:3001/aws/upload", file);
+    await axios.post("/aws/upload", file);
   } catch (err) {
     throw err;
   }
@@ -67,7 +67,7 @@ export const uploadBook = async (file: unknown) => {
 
 export const downloadBook = async (name: string) => {
   try {
-    await axios.get(`http://localhost:3001/aws/download?name=${name}`);
+    await axios.get(`/aws/download?name=${name}`);
   } catch (err) {
     throw err;
   }

@@ -1,7 +1,7 @@
 import { ICreateReview } from "./../../utils/interfaces";
 import axios from "axios";
 
-const URL = "http://localhost:3001/review";
+const URL = "/review";
 
 export const createReview = async (review: ICreateReview) => {
   try {

@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import axios from "axios";
 import { otherActions } from "../../utils/enums";
 
-const URL = "http://localhost:3001";
+const URL = "";
 
 export const getCategories = () => {
   return async (dispatch: Dispatch) => {

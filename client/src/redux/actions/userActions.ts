@@ -4,7 +4,7 @@ import { Dispatch } from "redux";
 import axios from "axios";
 import { userActions } from "../../utils/enums";
 
-const URL = "http://localhost:3001/user";
+const URL = "/user";
 
 export const createUser = async (user: ICreateUser) => {
   try {
