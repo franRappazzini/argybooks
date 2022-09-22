@@ -1,8 +1,8 @@
-import { CompleteBook, CompleteUser, ILogInUser, SearchBook } from "./interfaces";
-import { addToFavorite, removeToFavorite } from "../redux/actions/favoriteActions";
+import { CompleteUser, ILogInUser, SearchBook } from "./interfaces";
 import { findUser, setUser } from "../redux/actions/userActions";
 import { getAllBooks, getBook, setLoading } from "./../redux/actions/bookActions";
 import { getAuthors, getCategories } from "../redux/actions/otherActions";
+import { getFavorites, toFavorite } from "../redux/actions/favoriteActions";
 import { useAppDispatch, useAppSelector } from "./../redux/hooks";
 
 export const BookHook = () => {
@@ -36,7 +36,7 @@ export const UserHook = () => {
   const { loggedUser } = useAppSelector((state) => state.user);
 
   const setLoggedUser = (user: CompleteUser) => dispatch(setUser(user));
-  const findLoggedUser = (user: ILogInUser) => findUser(user); // para iniciar sesión
+  const findLoggedUser = (user: ILogInUser) => findUser(user);
 
   return { loggedUser, setLoggedUser, findLoggedUser };
 };
@@ -45,8 +45,8 @@ export const FavoriteHook = () => {
   const { favorites } = useAppSelector((state) => state.favorite);
   const dispatch = useAppDispatch();
 
-  const addToFav = (book: CompleteBook) => dispatch(addToFavorite(book));
-  const removeToFav = (id: number) => dispatch(removeToFavorite(id));
+  const toFav = (userId: number, bookId: number) => toFavorite(userId, bookId);
+  const getFavoritesUser = (userId: number) => dispatch(getFavorites(userId));
 
-  return { favorites, addToFav, removeToFav };
+  return { favorites, toFav, getFavoritesUser };
 };

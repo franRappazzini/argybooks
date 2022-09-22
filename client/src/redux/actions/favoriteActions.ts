@@ -1,23 +1,32 @@
-import { CompleteBook } from "./../../utils/interfaces";
 import { Dispatch } from "redux";
+import axios from "axios";
 import { favoriteActions } from "./../../utils/enums";
 
-// import axios from "axios";
+const URL = "http://localhost:3001/favorite";
 
-// const URL = "http://localhost:3001/favorite";
+export const toFavorite = async (userId: number, bookId: number) => {
+  try {
+    await axios.post(URL, { userId, bookId });
+  } catch (err) {
+    throw err;
+  }
+};
 
-// export const addToFavorite = async (bookId: number, userId: number) => {
+export const getFavorites = (userId: number) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      const { data } = await axios.get(URL + `/${userId}`);
+      dispatch({ type: favoriteActions.GET_FAVORITES, payload: data.favorites });
+    } catch (err) {
+      throw err;
+    }
+  };
+};
+
+// export const removeToFavorite = async (bookId: number, userId: number) => {
 //   try {
-//     await axios.post(URL, { bookId, userId });
+//     await axios.delete(URL + `/${userId}/${bookId}`);
 //   } catch (err) {
 //     throw err;
 //   }
 // };
-
-export const addToFavorite = (book: CompleteBook) => {
-  return (dispatch: Dispatch) => dispatch({ type: favoriteActions.ADD_FAVORITE, payload: book });
-};
-
-export const removeToFavorite = (id: number) => {
-  return (dispatch: Dispatch) => dispatch({ type: favoriteActions.REMOVE_FAVORITE, payload: id });
-};

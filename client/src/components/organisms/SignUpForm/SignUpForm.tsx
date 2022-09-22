@@ -29,7 +29,7 @@ function SignUpForm() {
   const [data, setData] = useState<ICreateUser>(initial);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { setLoggedUser } = UserHook();
+  const { setLoggedUser, findLoggedUser } = UserHook();
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -41,9 +41,11 @@ function SignUpForm() {
 
     try {
       const res = await createUser(data);
-
-      localStorage.setItem("lsLoggedUser", JSON.stringify(res.response));
-      setLoggedUser(res.response);
+      // una vez creado lo busco para traer sus relaciones
+      const model = { email: res.response.email, password: res.response.password };
+      const completeUser = await findLoggedUser(model);
+      localStorage.setItem("lsLoggedUser", JSON.stringify(completeUser));
+      setLoggedUser(completeUser);
       AlertBasic("Felicidades!", "Usuario creado con éxito", "success");
       setData(initial);
       setLoading(false);

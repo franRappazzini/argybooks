@@ -1,6 +1,7 @@
 import "./Books.scss";
 
-import { BookHook } from "../../../utils/customHooks";
+import { BookHook, OtherHook } from "../../../utils/customHooks";
+
 import CardBook from "../../molecules/CardBook/CardBook";
 import { CircularProgress } from "@mui/material";
 import { CompleteBook } from "../../../utils/interfaces";
@@ -8,7 +9,8 @@ import SearchBar from "../../molecules/SearchBar/SearchBar";
 import { useEffect } from "react";
 
 function Books() {
-  const { books, loading, setLoader, getBooks } = BookHook();
+  const { books, loading, getBooks, setLoader } = BookHook();
+  const { getAllAuthors, getAllCategories } = OtherHook();
 
   // TODO revisar re render aca (con 3g slow)
   // TODO revisar que queda el loading cuando voy al home y vuelvo a esta pagina => creo que porque el home también pide este hooks
@@ -16,6 +18,8 @@ function Books() {
   useEffect(() => {
     setLoader(true);
     getBooks();
+    getAllAuthors();
+    getAllCategories();
   }, []);
 
   return (

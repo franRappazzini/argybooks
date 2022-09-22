@@ -12,12 +12,16 @@ import { useNavigate } from "react-router-dom";
 function Header() {
   const navigate = useNavigate();
   const { loggedUser, setLoggedUser } = UserHook();
-  const { favorites } = FavoriteHook();
+  const { favorites, getFavoritesUser } = FavoriteHook();
   const lsLoggedUser = localStorage.getItem("lsLoggedUser");
 
   // TODO ojo no se si anda
   useEffect(() => {
-    lsLoggedUser && setLoggedUser(JSON.parse(lsLoggedUser));
+    if (lsLoggedUser) {
+      const user = JSON.parse(lsLoggedUser);
+      setLoggedUser(user);
+      getFavoritesUser(user.id);
+    }
   }, [lsLoggedUser]);
 
   return (

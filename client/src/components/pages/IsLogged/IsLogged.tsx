@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-import { useAppSelector } from "../../../redux/hooks";
+import { UserHook } from "../../../utils/customHooks";
 
 function IsLogged() {
-  const { loggedUser } = useAppSelector((state) => state.user);
+  const { loggedUser } = UserHook();
 
   // si el user esta logueado no puede acceder a las paginas que contiene
   return loggedUser && Object.keys(loggedUser).length ? <Navigate to={"/"} /> : <Outlet />;

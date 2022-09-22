@@ -18,46 +18,58 @@ interface Props {
 
 function BookDetailRating({ book, getBookDetail }: Props) {
   const { id, rating } = book;
-  const { loggedUser } = UserHook();
-  const { favorites, addToFav, removeToFav } = FavoriteHook();
+  const { loggedUser, findLoggedUser, setLoggedUser } = UserHook();
+  const { favorites, toFav, getFavoritesUser } = FavoriteHook();
   const [valuation, setValuation] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState({ rating: false, favorite: false });
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   useEffect(() => {
-    // si esta logueado y voto se lo agrego al render
-    if (loggedUser && Object.keys(loggedUser).length > 0) {
-      const userReview = loggedUser.reviews?.find((r: CompleteReview) => r.bookId === id);
+    console.log(loggedUser);
+    // si esta logueado y votó se lo agrego al render
+    if (loggedUser && loggedUser.reviews) {
+      const userReview = loggedUser.reviews.find((r: CompleteReview) => r.bookId === id);
       if (userReview) setValuation(userReview.rating);
     }
   }, [id, loggedUser]);
 
-  const verifyIsInFav = () => {
-    const findFav = favorites.find((b) => b.id === id);
-    return findFav ? true : false;
+  const handleFavorite = async () => {
+    if (!loggedUser?.id) return;
+
+    setLoading({ ...loading, favorite: true });
+    try {
+      // agrego el favorito al user y me traigo los favoritos con la actualización
+      await toFav(loggedUser.id, id);
+      await getFavoritesUser(loggedUser.id);
+    } catch (err) {}
+    setLoading({ ...loading, favorite: false });
   };
-  const handleAddFav = () => addToFav(book);
-  const handleRemoveFav = () => removeToFav(id);
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
-
   const handleValuation = async (num: number) => {
     setValuation(num);
-    setLoading(true);
+    setLoading({ ...loading, rating: true });
 
     const newReview: ICreateReview = { userId: loggedUser.id, bookId: id, rating: num };
     try {
       // TODO fijarme que tiene que quedar marcado por default la valuation si el user ya hizo review
-      // TODO revisar cuando me registro y quiero votar
       await createReview(newReview);
       getBookDetail(id.toString());
+      const res = await findLoggedUser({ email: loggedUser.email, password: loggedUser.password });
+      localStorage.setItem("lsLoggedUser", JSON.stringify(res));
+      setLoggedUser(res);
     } catch (err) {
       if (axios.isAxiosError(err)) AlertBasic("Error", err.message, "error");
       else AlertBasic("Error", "Lo sentimos, no su pudo cargar su valoración", "error");
     }
 
-    setLoading(false);
+    setLoading({ ...loading, rating: false });
+  };
+
+  const verifyIsFav = () => {
+    const findFav = favorites.find((b: CompleteBook) => b.id === id);
+    return findFav ? true : false;
   };
 
   return (
@@ -84,7 +96,7 @@ function BookDetailRating({ book, getBookDetail }: Props) {
           {loggedUser && Object.keys(loggedUser).length > 0 ? (
             <>
               <Typography variant="body2">Que tanto le ha gustado este libro?</Typography>
-              {!loading ? (
+              {!loading.rating ? (
                 <Rating
                   name="half-rating"
                   precision={0.5}
@@ -107,15 +119,18 @@ function BookDetailRating({ book, getBookDetail }: Props) {
         Rating: {rating} / Comentarios: 99
       </Typography>
 
-      {verifyIsInFav() ? (
-        <IconButton aria-label="Quitar de favoritos" onClick={handleRemoveFav}>
-          <Favorite color="error" />
-        </IconButton>
-      ) : (
-        <IconButton aria-label="Agregar a favoritos" onClick={handleAddFav}>
-          <FavoriteBorderOutlined />
-        </IconButton>
-      )}
+      {/* <Tooltip
+        title={!loggedUser?.id && "Debe iniciar sesión para guardar en favoritos"}
+        followCursor
+      > */}
+      <IconButton
+        aria-label={verifyIsFav() ? "Quitar de favoritos" : "Agregar a favoritos"}
+        onClick={handleFavorite}
+        disabled={loading.favorite || !loggedUser?.id}
+      >
+        {verifyIsFav() ? <Favorite color="error" /> : <FavoriteBorderOutlined />}
+      </IconButton>
+      {/* </Tooltip> */}
     </section>
   );
 }

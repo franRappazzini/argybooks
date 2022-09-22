@@ -6,8 +6,6 @@ import DetailContainer from "../../organisms/DetailContainer/DetailContainer";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-// TODO revisar porque no anda la linea 30
-
 function Detail() {
   const { bookId } = useParams();
   const { book, getBookDetail, loading, setLoader } = BookHook();

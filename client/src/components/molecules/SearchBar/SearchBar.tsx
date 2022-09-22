@@ -36,7 +36,6 @@ function SearchBar() {
   ) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
-    // name === "search" && localStorage.setItem("bookSearch", JSON.stringify(value));
     if (name === "category" || name === "author") {
       setLoader(true);
       getBooks({ ...data, [name]: value });
@@ -68,6 +67,7 @@ function SearchBar() {
       </FormControl>
 
       {/* TODO crear componente para esto */}
+      {/* TODO permitir des-seleccionar */}
       <Box sx={{ display: "flex", gridGap: "1rem" }}>
         <FormControl sx={{ minWidth: "15ch" }}>
           <InputLabel id="demo-simple-select-label" size="small">

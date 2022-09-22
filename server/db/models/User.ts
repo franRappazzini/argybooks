@@ -10,8 +10,8 @@ import {
 } from "sequelize-typescript";
 
 import { Book } from "./Book";
-import { Favorite } from "./Favorite";
 import { Review } from "./Review";
+import { Users_Books } from "./Users_Books";
 import { hash } from "../../utils/functions";
 
 @Table
@@ -38,8 +38,8 @@ export class User extends Model {
   @HasMany(() => Book)
   declare books: Book[];
 
-  @HasMany(() => Favorite)
-  declare favorites: Favorite[];
+  @BelongsToMany(() => Book, () => Users_Books)
+  declare favorites: Users_Books[];
 
   //   declare password: string;
 

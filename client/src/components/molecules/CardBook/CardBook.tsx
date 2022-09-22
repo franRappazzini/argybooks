@@ -2,15 +2,33 @@ import "./CardBook.scss";
 
 import { Box, Card, CardContent, IconButton, Typography } from "@mui/material";
 import { Favorite, FavoriteBorderOutlined } from "@mui/icons-material";
+import { FavoriteHook, UserHook } from "../../../utils/customHooks";
 
 import { CompleteBook } from "../../../utils/interfaces";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
 import { useState } from "react";
 
 function CardBook({ id, image, name, author, year, language }: CompleteBook) {
-  const [favorite, setFavorite] = useState<boolean>(false);
+  const { loggedUser } = UserHook();
+  const { favorites, toFav, getFavoritesUser } = FavoriteHook();
+  const [loading, setLoading] = useState(false);
 
-  const handleToggleFavorite = () => setFavorite(!favorite);
+  const handleFavorite = async () => {
+    if (!loggedUser?.id) return;
+
+    setLoading(true);
+    try {
+      // agrego/saco el favorito al user y me traigo los favoritos con la actualización
+      await toFav(loggedUser.id, id);
+      await getFavoritesUser(loggedUser.id);
+    } catch (err) {}
+    setLoading(false);
+  };
+
+  const verifyIsFav = () => {
+    const findFav = favorites.find((b: CompleteBook) => b.id === id);
+    return findFav ? true : false;
+  };
 
   return (
     <Card sx={{ width: "100%" }} className="card_book">
@@ -31,10 +49,11 @@ function CardBook({ id, image, name, author, year, language }: CompleteBook) {
                 <CustomLink to={`/book/${id}`} text={name} color="inherit" variant="h5" />
 
                 <IconButton
-                  aria-label={favorite ? "Quitar de favoritos" : "Agregar a favoritos"}
-                  onClick={handleToggleFavorite}
+                  aria-label={verifyIsFav() ? "Quitar de favoritos" : "Agregar a favoritos"}
+                  onClick={handleFavorite}
+                  disabled={loading || !loggedUser?.id}
                 >
-                  {favorite ? <Favorite color="error" /> : <FavoriteBorderOutlined />}
+                  {verifyIsFav() ? <Favorite color="error" /> : <FavoriteBorderOutlined />}
                 </IconButton>
               </div>
 

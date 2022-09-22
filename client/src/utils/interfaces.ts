@@ -1,14 +1,3 @@
-export interface BookHome {
-  id: number;
-  author: string;
-  name: string;
-  year: number;
-  image: string;
-  language: string;
-  description: string;
-  rating: number;
-}
-
 export interface Author {
   id: number;
   name: string;
@@ -64,7 +53,7 @@ export interface ICreateUser {
 export interface ILogInUser {
   email: string;
   password: string;
-  showPass: boolean;
+  showPass?: boolean;
 }
 
 export interface CompleteUser {

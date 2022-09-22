@@ -1,13 +1,15 @@
 import "./CardHomeContainer.scss";
 
-import { BookHome } from "../../../utils/interfaces";
+import { Box, CircularProgress, ImageList, ImageListItem } from "@mui/material";
+
 import { BookHook } from "../../../utils/customHooks";
-import CardHome from "../../molecules/CardHome/CardHome";
-import { CircularProgress } from "@mui/material";
+import { CompleteBook } from "../../../utils/interfaces";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CardHomeContainer() {
   const { books, loading, getBooks, setLoader } = BookHook();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoader(true);
@@ -19,12 +21,25 @@ function CardHomeContainer() {
       {loading ? (
         <CircularProgress />
       ) : books.length > 0 ? (
-        <section className="cards_container">
-          {books.map((book: BookHome) => (
-            <CardHome key={book.id} {...book} />
+        // <Box sx={{ width: 500, height: 450, overflowY: "scroll" }}>
+        <ImageList variant="masonry" cols={3} gap={8}>
+          {books.map((book: CompleteBook) => (
+            <ImageListItem
+              key={book.id}
+              onClick={() => navigate(`/book/${book.id}`)}
+              sx={{ cursor: "pointer" }}
+            >
+              <img
+                src={`${book.image}?w=248&fit=crop&auto=format`}
+                srcSet={`${book.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                alt={book.name}
+                loading="lazy"
+              />
+            </ImageListItem>
           ))}
-        </section>
+        </ImageList>
       ) : (
+        // {/* </Box> */}
         <p>Lo sentimos, aun no hay libros disponibles. Puedes cargar</p>
       )}
     </section>

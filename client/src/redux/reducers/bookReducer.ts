@@ -4,7 +4,7 @@ import { bookActions } from "../../utils/enums";
 const initialState = {
   books: [],
   book: {},
-  loading: true,
+  loading: false,
 };
 
 const bookReducer = (state = initialState, action: AnyAction) => {
@@ -16,7 +16,7 @@ const bookReducer = (state = initialState, action: AnyAction) => {
     case bookActions.SET_LOADING:
       return { ...state, loading: action.payload };
     default:
-      return { ...state, loading: true };
+      return state;
   }
 };
 

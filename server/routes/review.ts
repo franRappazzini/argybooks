@@ -12,6 +12,7 @@ review.post("", async (req, res) => {
   console.log(req.body);
 
   try {
+    // busco para agregar relaciones
     const userFind = await User.findByPk(userId, { rejectOnEmpty: true });
     const bookFind = await Book.findByPk(bookId, { include: Review, rejectOnEmpty: true });
     const [response, created] = await Review.findOrCreate({
@@ -19,7 +20,7 @@ review.post("", async (req, res) => {
       defaults: { rating, bookId, userId },
     });
 
-    if (rating === 0) await response.destroy();
+    if (rating === 0) await response.destroy(); // TODO esto esta MAL
     else if (created) {
       // agrego relaciones
       await userFind.$add("Review", bookId);
