@@ -30,15 +30,6 @@ Object.defineProperty(exports, "Op", { enumerable: true, get: function () { retu
 const sequelize_typescript_1 = require("sequelize-typescript");
 dotenv.config();
 const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD } = process.env;
-// const sequelize = new Sequelize({
-//   database: "books",
-//   dialect: "postgres",
-//   username: "postgres",
-//   password: "123456",
-//   storage: ":memory:",
-//   models: [__dirname + "/models"], // or [Player, Team],
-//   logging: false,
-// });
 const sequelize = process.env.NODE_ENV === "production"
     ? new sequelize_typescript_1.Sequelize({
         database: DB_NAME,
