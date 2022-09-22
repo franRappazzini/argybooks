@@ -27,7 +27,7 @@ function Header() {
 
   return (
     <Card elevation={1} className="header_component">
-      <section className="header_container max_width">
+      <header className="header_container max_width">
         <nav className="nav_header">
           <CustomLink to="/" text="Book" color="inherit" underline="none" variant="h6" />
 
@@ -41,7 +41,7 @@ function Header() {
 
         <div className="user_options">
           {loggedUser?.id ? (
-            <div>
+            <div className="logged_options">
               <IconButton onClick={() => navigate("/favorites")}>
                 <Badge badgeContent={favorites.length} color="error">
                   <FavoriteBorderRounded />
@@ -61,9 +61,8 @@ function Header() {
           )}
         </div>
 
-        {/* TODO agregar favoritos aca */}
-        <DrawerHeader {...loggedUser} />
-      </section>
+        <DrawerHeader loggedUser={loggedUser} favorites={favorites} />
+      </header>
     </Card>
   );
 }

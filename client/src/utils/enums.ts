@@ -15,8 +15,6 @@ export enum otherActions {
   GET_AUTHORS = "GET_AUTHORS",
 }
 
-export enum reviewActions {}
-
 export enum favoriteActions {
   GET_FAVORITES = "GET_FAVORITES",
   ADD_FAVORITE = "ADD_FAVORITE",

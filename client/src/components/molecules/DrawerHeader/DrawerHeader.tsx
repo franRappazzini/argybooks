@@ -1,15 +1,41 @@
 import "./DrawerHeader.scss";
 
-import { Button, Drawer, IconButton } from "@mui/material";
+import {
+  Add,
+  Cloud,
+  ContentCopy,
+  ContentCut,
+  ContentPaste,
+  FavoriteBorderOutlined,
+  FavoriteBorderRounded,
+  Menu,
+  MenuBook,
+  Search,
+} from "@mui/icons-material";
+import {
+  Badge,
+  Button,
+  Divider,
+  Drawer,
+  IconButton,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  MenuList,
+} from "@mui/material";
 
 import { CompleteUser } from "../../../utils/interfaces";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
-import { Menu } from "@mui/icons-material";
 import MenuHeader from "../MenuHeader/MenuHeader";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function DrawerHeader(loggedUser: CompleteUser) {
+interface Props {
+  loggedUser: CompleteUser;
+  favorites: [];
+}
+
+function DrawerHeader({ loggedUser, favorites }: Props) {
   const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -23,7 +49,9 @@ function DrawerHeader(loggedUser: CompleteUser) {
   return (
     <section className="drawer_component">
       <IconButton onClick={handleOpen}>
-        <Menu />
+        <Badge badgeContent={favorites.length} color="error">
+          <Menu />
+        </Badge>
       </IconButton>
       <Drawer anchor="right" open={open} onClose={handleClose}>
         <section className="drawer_container">
@@ -42,18 +70,33 @@ function DrawerHeader(loggedUser: CompleteUser) {
             </div>
           )}
 
-          <div className="links_drawer">
-            <CustomLink to="/books" text="Buscar libros" color="inherit" onClick={handleClose} />
-
+          <MenuList>
+            <Divider />
+            <MenuItem onClick={() => handleNavigate("/books")}>
+              <ListItemIcon>
+                <Search />
+              </ListItemIcon>
+              <ListItemText>Buscar</ListItemText>
+            </MenuItem>
             {loggedUser?.id && (
-              <CustomLink
-                to="/create_book"
-                text="Crear libro"
-                color="inherit"
-                onClick={handleClose}
-              />
+              <>
+                <MenuItem onClick={() => handleNavigate("/create_book")}>
+                  <ListItemIcon>
+                    <MenuBook />
+                  </ListItemIcon>
+                  <ListItemText>Crear</ListItemText>
+                </MenuItem>
+                <MenuItem onClick={() => handleNavigate("/favorites")}>
+                  <ListItemIcon>
+                    <Badge badgeContent={favorites.length} color="error">
+                      <FavoriteBorderOutlined />
+                    </Badge>
+                  </ListItemIcon>
+                  <ListItemText>Favoritos</ListItemText>
+                </MenuItem>
+              </>
             )}
-          </div>
+          </MenuList>
         </section>
       </Drawer>
     </section>
