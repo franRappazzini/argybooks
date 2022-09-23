@@ -45,4 +45,36 @@ user.get("/logged", async (req, res) => {
   }
 });
 
+user.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const response = await User.findByPk(id, { rejectOnEmpty: true });
+    // vació las relaciones para poder eliminarlo
+    await response.$set("favorites", []);
+    await response.$set("books", []);
+    await response.$set("reviews", []);
+
+    await response.destroy();
+    res.json({ message: "User deleted successfully!" });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+user.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { password }: any = req.query;
+
+  try {
+    const response = await User.findByPk(id, { rejectOnEmpty: true });
+    response.password = password;
+    await response.save();
+    res.json({ message: "Password updated successfully!", response });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
+
 export default user;

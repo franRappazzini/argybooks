@@ -17,10 +17,6 @@ favorite.post("", async (req, res) => {
     if (hasFav) await response?.$remove("favorites", bookId);
     else await response?.$add("favorites", bookId);
 
-    // const [response, created] = await Favorite.findOrCreate({ where: { userId, bookId } });
-
-    // if (!created) await response.destroy();
-
     res.status(200).json({ message: "Request successfully!" });
   } catch (err) {
     console.log(err);

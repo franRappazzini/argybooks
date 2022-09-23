@@ -51,4 +51,33 @@ user.get("/logged", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(404).json(err);
     }
 }));
+user.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    try {
+        const response = yield User_1.User.findByPk(id, { rejectOnEmpty: true });
+        // vació las relaciones para poder eliminarlo
+        yield response.$set("favorites", []);
+        yield response.$set("books", []);
+        yield response.$set("reviews", []);
+        yield response.destroy();
+        res.json({ message: "User deleted successfully!" });
+    }
+    catch (err) {
+        res.status(400).json(err);
+    }
+}));
+user.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const { password } = req.query;
+    try {
+        const response = yield User_1.User.findByPk(id, { rejectOnEmpty: true });
+        response.password = password;
+        yield response.save();
+        res.json({ message: "Password updated successfully!", response });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).json(err);
+    }
+}));
 exports.default = user;

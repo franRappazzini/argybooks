@@ -25,8 +25,6 @@ favorite.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             yield (response === null || response === void 0 ? void 0 : response.$remove("favorites", bookId));
         else
             yield (response === null || response === void 0 ? void 0 : response.$add("favorites", bookId));
-        // const [response, created] = await Favorite.findOrCreate({ where: { userId, bookId } });
-        // if (!created) await response.destroy();
         res.status(200).json({ message: "Request successfully!" });
     }
     catch (err) {
