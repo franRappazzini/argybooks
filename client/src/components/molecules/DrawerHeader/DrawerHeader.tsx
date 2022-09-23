@@ -1,18 +1,6 @@
 import "./DrawerHeader.scss";
 
 import {
-  Add,
-  Cloud,
-  ContentCopy,
-  ContentCut,
-  ContentPaste,
-  FavoriteBorderOutlined,
-  FavoriteBorderRounded,
-  Menu,
-  MenuBook,
-  Search,
-} from "@mui/icons-material";
-import {
   Badge,
   Button,
   Divider,
@@ -23,9 +11,9 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/material";
+import { FavoriteBorderOutlined, Menu, MenuBook, Search } from "@mui/icons-material";
 
 import { CompleteUser } from "../../../utils/interfaces";
-import CustomLink from "../../atoms/CustomLink/CustomLink";
 import MenuHeader from "../MenuHeader/MenuHeader";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -84,7 +72,7 @@ function DrawerHeader({ loggedUser, favorites }: Props) {
                   <ListItemIcon>
                     <MenuBook />
                   </ListItemIcon>
-                  <ListItemText>Crear</ListItemText>
+                  <ListItemText>Añadir</ListItemText>
                 </MenuItem>
                 <MenuItem onClick={() => handleNavigate("/favorites")}>
                   <ListItemIcon>
