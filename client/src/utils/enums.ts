@@ -20,3 +20,7 @@ export enum favoriteActions {
   ADD_FAVORITE = "ADD_FAVORITE",
   REMOVE_FAVORITE = "REMOVE_FAVORITE",
 }
+
+export enum themeActions {
+  CHANGE_THEME = "CHANGE_THEME",
+}

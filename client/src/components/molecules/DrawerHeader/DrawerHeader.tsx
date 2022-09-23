@@ -67,22 +67,22 @@ function DrawerHeader({ loggedUser, favorites }: Props) {
               <ListItemText>Buscar</ListItemText>
             </MenuItem>
             {loggedUser?.id && (
-              <>
-                <MenuItem onClick={() => handleNavigate("/create_book")}>
-                  <ListItemIcon>
-                    <MenuBook />
-                  </ListItemIcon>
-                  <ListItemText>Añadir</ListItemText>
-                </MenuItem>
-                <MenuItem onClick={() => handleNavigate("/favorites")}>
-                  <ListItemIcon>
-                    <Badge badgeContent={favorites.length} color="error">
-                      <FavoriteBorderOutlined />
-                    </Badge>
-                  </ListItemIcon>
-                  <ListItemText>Favoritos</ListItemText>
-                </MenuItem>
-              </>
+              <MenuItem onClick={() => handleNavigate("/create_book")}>
+                <ListItemIcon>
+                  <MenuBook />
+                </ListItemIcon>
+                <ListItemText>Añadir</ListItemText>
+              </MenuItem>
+            )}
+            {loggedUser?.id && (
+              <MenuItem onClick={() => handleNavigate("/favorites")}>
+                <ListItemIcon>
+                  <Badge badgeContent={favorites.length} color="error">
+                    <FavoriteBorderOutlined />
+                  </Badge>
+                </ListItemIcon>
+                <ListItemText>Favoritos</ListItemText>
+              </MenuItem>
             )}
           </MenuList>
         </section>

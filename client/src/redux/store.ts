@@ -2,6 +2,7 @@ import bookReducer from "./reducers/bookReducer";
 import { configureStore } from "@reduxjs/toolkit";
 import favoriteReducer from "./reducers/favoriteReducer";
 import otherReducer from "./reducers/otherReducer";
+import themeReducer from "./reducers/themeReducer";
 import userReducer from "./reducers/userReducer";
 
 // ...
@@ -12,6 +13,7 @@ const store = configureStore({
     user: userReducer,
     favorite: favoriteReducer,
     other: otherReducer,
+    theme: themeReducer,
   },
 });
 

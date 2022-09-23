@@ -1,17 +1,20 @@
 import { Avatar, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from "@mui/material";
-import { Logout, Settings } from "@mui/icons-material";
+import { DarkMode, Logout } from "@mui/icons-material";
 
 import { CompleteUser } from "../../../utils/interfaces";
+import { ThemeHook } from "../../../utils/customHooks";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 function MenuHeader({ username }: CompleteUser) {
+  const { theme, setTheme } = ThemeHook();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate();
 
   const handleClick = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
+  const darkMode = () => setTheme(theme === "light" ? "dark" : "light");
   const handleLogOut = () => {
     localStorage.removeItem("lsLoggedUser");
     window.location.reload();
@@ -69,11 +72,11 @@ function MenuHeader({ username }: CompleteUser) {
           <Avatar /> Perfil
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={darkMode}>
           <ListItemIcon>
-            <Settings fontSize="small" />
+            <DarkMode fontSize="small" />
           </ListItemIcon>
-          Ajustes
+          {theme === "light" ? "Activar" : "Desactivar"}
         </MenuItem>
         <MenuItem onClick={handleLogOut}>
           <ListItemIcon>

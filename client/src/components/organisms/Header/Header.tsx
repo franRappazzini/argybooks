@@ -1,7 +1,7 @@
 import "./Header.scss";
 
 import { Badge, Button, Card, IconButton } from "@mui/material";
-import { FavoriteHook, UserHook } from "../../../utils/customHooks";
+import { FavoriteHook, ThemeHook, UserHook } from "../../../utils/customHooks";
 
 import CustomLink from "../../atoms/CustomLink/CustomLink";
 import DrawerHeader from "../../molecules/DrawerHeader/DrawerHeader";
@@ -12,18 +12,23 @@ import { useNavigate } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
+  const { setTheme } = ThemeHook();
   const { loggedUser, setLoggedUser } = UserHook();
   const { favorites, getFavoritesUser } = FavoriteHook();
   const lsLoggedUser = localStorage.getItem("lsLoggedUser");
+  const lsTheme = localStorage.getItem("lsTheme");
 
   // TODO ojo no se si anda
   useEffect(() => {
+    // para actualizar el logged user
     if (lsLoggedUser) {
       const user = JSON.parse(lsLoggedUser);
       setLoggedUser(user);
       getFavoritesUser(user.id);
     }
-  }, [lsLoggedUser]);
+    // para actualizar el theme
+    if (lsTheme) setTheme(JSON.parse(lsTheme));
+  }, [lsLoggedUser, lsTheme]);
 
   return (
     <Card elevation={1} className="header_component">

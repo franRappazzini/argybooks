@@ -1,22 +1,13 @@
 import "./index.css";
 
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import CssBaseline from "@mui/material/CssBaseline";
 import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import axios from "axios";
 import reportWebVitals from "./reportWebVitals";
 import store from "./redux/store";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
 
 axios.defaults.baseURL = process.env.REACT_APP_SERVER || "http://localhost:3001";
 
@@ -25,10 +16,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <ThemeProvider theme={darkTheme}>
-          <CssBaseline />
-          <App />
-        </ThemeProvider>
+        <App />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

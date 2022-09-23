@@ -4,6 +4,10 @@ import { getAllBooks, getBook, getTopBooks, setLoading } from "./../redux/action
 import { getAuthors, getCategories } from "../redux/actions/otherActions";
 import { getFavorites, toFavorite } from "../redux/actions/favoriteActions";
 import { useAppDispatch, useAppSelector } from "./../redux/hooks";
+import { useEffect, useState } from "react";
+
+import { PaletteMode } from "@mui/material";
+import { changeTheme } from "../redux/actions/themeActions";
 
 export const BookHook = () => {
   const dispatch = useAppDispatch();
@@ -50,4 +54,16 @@ export const FavoriteHook = () => {
   const getFavoritesUser = (userId: number) => dispatch(getFavorites(userId));
 
   return { favorites, toFav, getFavoritesUser };
+};
+
+export const ThemeHook = () => {
+  const { theme } = useAppSelector((state) => state.theme);
+  const dispatch = useAppDispatch();
+
+  const setTheme = (color: PaletteMode) => {
+    localStorage.setItem("lsTheme", JSON.stringify(color));
+    dispatch(changeTheme(color));
+  };
+
+  return { theme, setTheme };
 };
