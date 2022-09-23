@@ -10,6 +10,7 @@ import Header from "./components/organisms/Header/Header";
 import Home from "./components/pages/Home/Home";
 import IsLogged from "./components/pages/IsLogged/IsLogged";
 import LogIn from "./components/pages/LogIn/LogIn";
+import Page404 from "./components/pages/Page404/Page404";
 import Profile from "./components/pages/Profile/Profile";
 import ProtectedRoutes from "./components/pages/ProtectedRoutes/ProtectedRoutes";
 import SignUp from "./components/pages/SignUp/SignUp";
@@ -37,7 +38,7 @@ function App() {
 
         <Route path="/book/:bookId" element={<Detail />} />
 
-        {/* TODO agregar page 404 */}
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </>
   );

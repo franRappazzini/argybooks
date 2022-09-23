@@ -1,0 +1,11 @@
+.page404_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+
+  :nth-child(2) {
+    margin: 1rem 0;
+  }
+}
