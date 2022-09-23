@@ -49,12 +49,10 @@ function DrawerHeader({ loggedUser, favorites }: Props) {
             </div>
           ) : (
             <div className="btns_drawer">
-              <Button size="small" variant="outlined" onClick={() => handleNavigate("/sign_up")}>
+              <Button variant="outlined" onClick={() => handleNavigate("/sign_up")}>
                 Registrarse
               </Button>
-              <Button size="small" onClick={() => handleNavigate("/log_in")}>
-                Iniciar sesión
-              </Button>
+              <Button onClick={() => handleNavigate("/log_in")}>Iniciar sesión</Button>
             </div>
           )}
 
