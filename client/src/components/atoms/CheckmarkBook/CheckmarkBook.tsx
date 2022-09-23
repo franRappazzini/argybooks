@@ -43,6 +43,7 @@ function CheckmarkBook({ data, setData }: Props) {
         input={<OutlinedInput label="Categorías*" />}
         renderValue={(selected) => selected.join(", ")}
         size="small"
+        sx={{ minWidth: "3rem" }}
       >
         {categories.map((cat: string) => (
           <MenuItem key={cat} value={cat}>

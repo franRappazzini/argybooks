@@ -41,6 +41,7 @@ function InputsBookContainer({
           name="year"
           value={data.year}
           onChange={handleChange}
+          sx={{ minWidth: "3rem" }}
         />
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label" size="small">
@@ -53,6 +54,7 @@ function InputsBookContainer({
             name="language"
             onChange={handleChange}
             size="small"
+            sx={{ minWidth: "3rem" }}
           >
             {arrLanguages.map((lan: string) => (
               <MenuItem key={lan} value={lan}>

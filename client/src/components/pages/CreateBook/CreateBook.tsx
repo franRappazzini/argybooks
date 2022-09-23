@@ -70,7 +70,6 @@ function CreateBook() {
       });
     } catch (err) {
       setLoading(false);
-      console.log(err);
       if (axios.isAxiosError(err)) return AlertBasic("Error!", err.message, "error");
       else return AlertBasic("Error!", "Lo sentimos, vuelva a intentarlo mas tarde", "error");
     }
