@@ -45,7 +45,7 @@ function DrawerHeader({ loggedUser, favorites }: Props) {
         <section className="drawer_container">
           {loggedUser?.id ? (
             <div className="user-menu_container">
-              <MenuHeader {...loggedUser} />
+              <MenuHeader loggedUser={loggedUser} handleNavigate={handleNavigate} />
             </div>
           ) : (
             <div className="btns_drawer">

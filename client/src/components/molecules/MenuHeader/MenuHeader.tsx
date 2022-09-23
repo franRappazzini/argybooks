@@ -6,7 +6,12 @@ import { ThemeHook } from "../../../utils/customHooks";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-function MenuHeader({ username }: CompleteUser) {
+interface Props {
+  loggedUser: CompleteUser;
+  handleNavigate?: (to: string) => void;
+}
+
+function MenuHeader({ loggedUser, handleNavigate }: Props) {
   const { theme, setTheme } = ThemeHook();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -22,7 +27,7 @@ function MenuHeader({ username }: CompleteUser) {
 
   return (
     <>
-      <Tooltip title={`Cuenta de ${username}`}>
+      <Tooltip title={`Cuenta de ${loggedUser?.username}`}>
         <IconButton
           onClick={handleClick}
           size="small"
@@ -30,7 +35,7 @@ function MenuHeader({ username }: CompleteUser) {
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
         >
-          <Avatar sx={{ width: 32, height: 32 }}>{username[0].toUpperCase()}</Avatar>
+          <Avatar sx={{ width: 32, height: 32 }}>{loggedUser?.username[0].toUpperCase()}</Avatar>
         </IconButton>
       </Tooltip>
       <Menu
@@ -68,7 +73,7 @@ function MenuHeader({ username }: CompleteUser) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={() => navigate("/profile")}>
+        <MenuItem onClick={() => handleNavigate?.("/profile") || navigate("/profile")}>
           <Avatar /> Perfil
         </MenuItem>
         <Divider />
