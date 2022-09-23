@@ -27,3 +27,19 @@ export const findUser = async ({ email, password }: ILogInUser) => {
     throw err;
   }
 };
+
+export const deleteUser = async (id: string) => {
+  try {
+    await axios.delete(URL + `/${id}`);
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const changePassword = async (id: string, password: string) => {
+  try {
+    await axios.put(URL + `/${id}?password=${password}`);
+  } catch (err) {
+    throw err;
+  }
+};

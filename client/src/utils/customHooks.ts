@@ -1,10 +1,9 @@
 import { CompleteUser, ILogInUser, SearchBook } from "./interfaces";
-import { findUser, setUser } from "../redux/actions/userActions";
+import { changePassword, deleteUser, findUser, setUser } from "../redux/actions/userActions";
 import { getAllBooks, getBook, getTopBooks, setLoading } from "./../redux/actions/bookActions";
 import { getAuthors, getCategories } from "../redux/actions/otherActions";
 import { getFavorites, toFavorite } from "../redux/actions/favoriteActions";
 import { useAppDispatch, useAppSelector } from "./../redux/hooks";
-import { useEffect, useState } from "react";
 
 import { PaletteMode } from "@mui/material";
 import { changeTheme } from "../redux/actions/themeActions";
@@ -42,8 +41,10 @@ export const UserHook = () => {
 
   const setLoggedUser = (user: CompleteUser) => dispatch(setUser(user));
   const findLoggedUser = (user: ILogInUser) => findUser(user);
+  const destroyUser = async (id: string) => await deleteUser(id);
+  const changePass = async (id: string, password: string) => await changePassword(id, password);
 
-  return { loggedUser, setLoggedUser, findLoggedUser };
+  return { loggedUser, setLoggedUser, findLoggedUser, destroyUser, changePass };
 };
 
 export const FavoriteHook = () => {
