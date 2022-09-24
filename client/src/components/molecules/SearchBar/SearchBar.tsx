@@ -35,7 +35,7 @@ function SearchBar() {
   ) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
-    if (name === "category" || name === "author") {
+    if (name === "category" || name === "author" || name === "language") {
       setLoader(true);
       getBooks({ ...data, [name]: value });
     }
