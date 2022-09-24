@@ -39,7 +39,7 @@ function Header() {
           <div>
             <CustomLink to="/books" text="Buscar libros" color="inherit" />
             {loggedUser && Object.keys(loggedUser).length > 0 && (
-              <CustomLink to="/create_book" text="Añadir Libro" color="inherit" />
+              <CustomLink to="/create_book" text="Añadir libros" color="inherit" />
             )}
           </div>
         </nav>

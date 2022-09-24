@@ -8,15 +8,15 @@ import {
   InputLabel,
   MenuItem,
   OutlinedInput,
-  Select,
   SelectChangeEvent,
 } from "@mui/material";
 import React, { useState } from "react";
 
 import Search from "@mui/icons-material/Search";
 import { SearchBook } from "../../../utils/interfaces";
+import SelectCustom from "../../atoms/SelectCustom/SelectCustom";
 
-const initial = { search: "", category: "", author: "" };
+const initial = { search: "", category: "", author: "", language: "" };
 
 function SearchBar() {
   const { getBooks, setLoader } = BookHook();
@@ -66,55 +66,53 @@ function SearchBar() {
         />
       </FormControl>
 
-      {/* TODO crear componente para esto */}
-      {/* TODO permitir des-seleccionar */}
       <section className="selects_container">
-        <FormControl sx={{ minWidth: "15ch" }}>
-          <InputLabel id="demo-simple-select-label" size="small" className="search_select">
-            Categoría
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            label="Categoría"
-            size="small"
-            name="category"
-            value={data.category}
-            onChange={handleChange}
-          >
-            <MenuItem value="">Todas</MenuItem>
-            {categories &&
-              categories.length > 0 &&
-              categories.map((cat: string) => (
-                <MenuItem key={cat} value={cat}>
-                  {cat}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-        <FormControl sx={{ minWidth: "15ch" }}>
-          <InputLabel id="demo-simple-select-label2" size="small" className="search_select">
-            Autor
-          </InputLabel>
-          <Select
-            labelId="demo-simple-select-label2"
-            id="demo-simple-select2"
-            label="Autor"
-            size="small"
-            name="author"
-            value={data.author}
-            onChange={handleChange}
-          >
-            <MenuItem value="">Todos</MenuItem>
-            {authors &&
-              authors.length > 0 &&
-              authors.map((author: string) => (
-                <MenuItem key={author} value={author}>
-                  {author}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
+        <SelectCustom
+          label="Categoría"
+          name="category"
+          value={data.category}
+          handleChange={handleChange}
+          generic="Todas"
+          children={
+            categories &&
+            categories.length > 0 &&
+            categories.map((cat: string) => (
+              <MenuItem key={cat} value={cat}>
+                {cat}
+              </MenuItem>
+            ))
+          }
+        />
+
+        <SelectCustom
+          label="Autor"
+          name="author"
+          value={data.author}
+          handleChange={handleChange}
+          generic="Todos"
+          children={
+            authors &&
+            authors.length > 0 &&
+            authors.map((author: string) => (
+              <MenuItem key={author} value={author}>
+                {author}
+              </MenuItem>
+            ))
+          }
+        />
+
+        <SelectCustom
+          label="Idioma"
+          name="language"
+          value={data.language}
+          handleChange={handleChange}
+          generic="Todos"
+          children={["Spanish", "English"].map((l) => (
+            <MenuItem key={l} value={l}>
+              {l}
+            </MenuItem>
+          ))}
+        />
       </section>
     </form>
   );

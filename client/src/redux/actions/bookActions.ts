@@ -12,6 +12,7 @@ export const getAllBooks = (data?: SearchBook) => {
     if (data?.search && data?.search !== "") url += `name=${data?.search}&`;
     if (data?.category && data?.category !== "") url += `category=${data?.category}&`;
     if (data?.author && data?.author !== "") url += `author=${data?.author}&`;
+    if (data?.language && data?.language !== "") url += `language=${data?.language}&`;
 
     try {
       const { data } = await axios.get(url);

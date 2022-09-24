@@ -17,6 +17,7 @@ export interface SearchBook {
   search?: string;
   category?: string;
   author?: string;
+  language?: string;
 }
 
 export interface CompleteBook {

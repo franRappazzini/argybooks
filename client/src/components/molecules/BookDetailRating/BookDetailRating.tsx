@@ -116,7 +116,7 @@ function BookDetailRating({ book, getBookDetail }: Props) {
         </MenuItem>
       </Menu>
       <Typography variant="body1" sx={{ mr: "0.5rem" }}>
-        Rating: {rating} / Comentarios: 99
+        Rating: {rating.toFixed(2)} / Comentarios: 99
       </Typography>
 
       {/* <Tooltip
