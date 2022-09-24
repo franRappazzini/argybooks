@@ -42,7 +42,7 @@ book.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 book.get("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, category, author } = req.query;
+    const { name, category, author, language } = req.query;
     let options = {
         where: { [db_1.Op.and]: {} },
         include: [{ model: Category_1.Category }, { model: Author_1.Author }, { model: Review_1.Review }],
@@ -66,6 +66,9 @@ book.get("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         if (author) {
             options.where[db_1.Op.and] = Object.assign(Object.assign({}, options.where[db_1.Op.and]), { "$author.name$": author });
+        }
+        if (language) {
+            options.where[db_1.Op.and] = Object.assign(Object.assign({}, options.where[db_1.Op.and]), { language });
         }
         const response = yield Book_1.Book.findAll(options);
         res.json(response);

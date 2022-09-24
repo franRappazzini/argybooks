@@ -48,7 +48,7 @@ book.post("", async (req, res) => {
 });
 
 book.get("", async (req, res) => {
-  const { name, category, author } = req.query;
+  const { name, category, author, language } = req.query;
 
   let options = {
     where: { [Op.and]: {} },
@@ -73,6 +73,9 @@ book.get("", async (req, res) => {
     }
     if (author) {
       options.where[Op.and] = { ...options.where[Op.and], "$author.name$": author };
+    }
+    if (language) {
+      options.where[Op.and] = { ...options.where[Op.and], language };
     }
 
     const response = await Book.findAll(options);
