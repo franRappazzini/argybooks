@@ -93,6 +93,8 @@ function InputsBookContainer({
       </section>
 
       <TextField
+        error={error.description.length > 0 && true}
+        helperText={error.description.length > 0 && error.description}
         size="small"
         label="Descripción"
         variant="outlined"

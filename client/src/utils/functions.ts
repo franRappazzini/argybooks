@@ -18,7 +18,7 @@ export const bookValidations = (
     fileV: "",
   };
 
-  if (!author.match(/^[a-zA-Z\s]*$/) || author.length < 3)
+  if (!author.match(/^[a-zA-Z_.-\s]*$/) || author.length < 3)
     errors.author = "El autor debe contener al menos 3 caracteres y solo letras.";
   if (year <= 0 || year > new Date().getFullYear())
     errors.year = "El año debe ser mayor a 0 y menor al año actual.";
@@ -26,8 +26,8 @@ export const bookValidations = (
     errors.language = "El idioma debe ser una de las opciones disponibles.";
   if (!categories.length || categories.length > 4)
     errors.categories = "Debes seleccionar al menos una categoría.";
-  if (description.length >= 1500)
-    errors.description = "La descripción debe contener menos de 1500 caracteres.";
+  if (description.length >= 2000)
+    errors.description = `La descripción debe contener menos de 2000 caracteres (contiene ${description.length})`;
   if (!image) errors.imageV = "Debes seleccionar una imagen de portada para el libro.";
   if (!file) errors.fileV = "Debes seleccionar el archivo del libro.";
 
