@@ -43,7 +43,7 @@ aws.get("/download", async (req, res) => {
   try {
     const bucketAndKey = {
       Bucket: BUCKET_NAME || "",
-      Key: name,
+      Key: `${name}.pdf`,
     };
 
     s3.getObject(bucketAndKey, (err, data: any) => {

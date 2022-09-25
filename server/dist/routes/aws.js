@@ -73,7 +73,7 @@ aws.get("/download", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     try {
         const bucketAndKey = {
             Bucket: BUCKET_NAME || "",
-            Key: name,
+            Key: `${name}.pdf`,
         };
         s3.getObject(bucketAndKey, (err, data) => {
             if (err)
