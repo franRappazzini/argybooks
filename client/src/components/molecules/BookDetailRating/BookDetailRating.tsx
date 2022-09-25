@@ -26,7 +26,6 @@ function BookDetailRating({ book, getBookDetail }: Props) {
   const open = Boolean(anchorEl);
 
   useEffect(() => {
-    console.log(loggedUser);
     // si esta logueado y votó se lo agrego al render
     if (loggedUser && loggedUser.reviews) {
       const userReview = loggedUser.reviews.find((r: CompleteReview) => r.bookId === id);

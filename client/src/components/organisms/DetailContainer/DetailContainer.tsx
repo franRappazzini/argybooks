@@ -1,6 +1,7 @@
 import "./DetailContainer.scss";
 
 import { Breadcrumbs, Button, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 
 import BookDetailRating from "../../molecules/BookDetailRating/BookDetailRating";
 import { CompleteBook } from "../../../utils/interfaces";
@@ -14,15 +15,16 @@ interface Props {
   search?: string;
 }
 
+// TODO ver porque puse el search en las Props
 function DetailContainer({ book, getBookDetail, search }: Props) {
   const { name, author, description, categories, year, language } = book;
-
   const handleDownload = () => downloadBook(name);
 
   return (
     <section className="detail_container max_width">
       <Breadcrumbs aria-label="breadcrumb" sx={{ m: "1rem 0" }}>
         <CustomLink to="/" color="primary" text="Home" />
+        <CustomLink to="/books" color="primary" text="Libros" />
         <Typography color="text.secondary">{book.name}</Typography>
       </Breadcrumbs>
 
@@ -33,7 +35,12 @@ function DetailContainer({ book, getBookDetail, search }: Props) {
             {name}
           </Typography>
           <Typography variant="body1" sx={{ fontStyle: "italic", m: "1rem 0" }}>
-            <CustomLink to="/" color="primary" text={author.name} />
+            <CustomLink to="/books" color="primary" text={author.name} state={author.name} />
+            {/* <Link to="/books" state={{ value: "hola" }}>
+              {author.name}
+              
+            </Link> */}
+            {/* <p onClick={() => navigate("/books", { state: { value: "hola" } })}>{author.name}</p> */}
           </Typography>
 
           <BookDetailRating book={book} getBookDetail={getBookDetail} />

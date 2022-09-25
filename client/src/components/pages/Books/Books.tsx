@@ -7,21 +7,23 @@ import { CircularProgress } from "@mui/material";
 import { CompleteBook } from "../../../utils/interfaces";
 import SearchBar from "../../molecules/SearchBar/SearchBar";
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function Books() {
   const { books, loading, getBooks, setLoader } = BookHook();
   const { getAllAuthors, getAllCategories } = OtherHook();
+  const { state }: any = useLocation();
 
   useEffect(() => {
     setLoader(true);
-    getBooks();
+    !state?.value && getBooks(); // si existe el state.value busca la coincidencia esa en SearchBar
     getAllAuthors();
     getAllCategories();
-  }, []);
+  }, [state.value]);
 
   return (
     <main className="books_component component">
-      <SearchBar />
+      <SearchBar state={state?.value} />
 
       <section className="books_container">
         {loading ? (

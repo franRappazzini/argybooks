@@ -10,18 +10,26 @@ import {
   OutlinedInput,
   SelectChangeEvent,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Search from "@mui/icons-material/Search";
 import { SearchBook } from "../../../utils/interfaces";
 import SelectCustom from "../../atoms/SelectCustom/SelectCustom";
+import { useLocation } from "react-router-dom";
 
-const initial = { search: "", category: "", author: "", language: "" };
+interface Prop {
+  state: string;
+}
 
-function SearchBar() {
+function SearchBar({ state }: Prop) {
+  const initial = { search: "", category: "", author: state || "", language: "" };
   const { getBooks, setLoader } = BookHook();
   const { categories, authors } = OtherHook();
   const [data, setData] = useState<SearchBook>(initial);
+
+  useEffect(() => {
+    state && getBooks({ ...data, author: state });
+  }, [state]);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();

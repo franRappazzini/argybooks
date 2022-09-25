@@ -9,6 +9,7 @@ interface ILink {
   text: string;
   underline?: "none" | "always" | "hover";
   onClick?: () => void;
+  state?: string;
   variant?:
     | "h1"
     | "h2"
@@ -26,12 +27,12 @@ interface ILink {
     | "inherit";
 }
 
-function CustomLink({ to, color, text, underline, onClick, variant }: ILink) {
+function CustomLink({ to, color, text, underline, onClick, state, variant }: ILink) {
   const navigate = useNavigate();
 
   const handleClick = () => {
     onClick?.();
-    navigate(to);
+    navigate(to, { state: { value: state } });
   };
 
   return (
