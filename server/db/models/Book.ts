@@ -35,7 +35,7 @@ export class Book extends Model {
   @Column
   declare language: string;
   @AllowNull(false)
-  @Column
+  @Column(DataType.STRING(2000))
   declare description: string;
 
   @Default(0)

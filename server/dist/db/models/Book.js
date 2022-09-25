@@ -42,7 +42,7 @@ __decorate([
 ], Book.prototype, "language", void 0);
 __decorate([
     (0, sequelize_typescript_1.AllowNull)(false),
-    sequelize_typescript_1.Column,
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING(2000)),
     __metadata("design:type", String)
 ], Book.prototype, "description", void 0);
 __decorate([
