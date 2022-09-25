@@ -19,7 +19,7 @@ function Books() {
     !state?.value && getBooks(); // si existe el state.value busca la coincidencia esa en SearchBar
     getAllAuthors();
     getAllCategories();
-  }, [state.value]);
+  }, [state?.value]);
 
   return (
     <main className="books_component component">

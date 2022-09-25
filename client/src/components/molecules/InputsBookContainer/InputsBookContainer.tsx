@@ -13,6 +13,15 @@ interface InputValues {
   handleChange: (e: React.ChangeEvent<HTMLInputElement> | any) => void;
   handleFile: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error: {
+    author: string;
+    year: string;
+    language: string;
+    description: string;
+    categories: string;
+    fileV: string;
+    imageV: string;
+  };
 }
 
 function InputsBookContainer({
@@ -21,11 +30,14 @@ function InputsBookContainer({
   handleChange,
   handleFile,
   handleImage,
+  error,
 }: InputValues) {
   return (
     <>
       <section className="inputs-book_container">
         <TextField
+          error={error.author.length > 0 && true}
+          helperText={error.author.length > 0 && error.author}
           size="small"
           label="Autor*"
           variant="outlined"
@@ -34,6 +46,8 @@ function InputsBookContainer({
           onChange={handleChange}
         />
         <TextField
+          error={error.year.length > 0 && true}
+          helperText={error.year.length > 0 && error.year}
           size="small"
           label="Año*"
           variant="outlined"
@@ -48,6 +62,7 @@ function InputsBookContainer({
             Idioma*
           </InputLabel>
           <Select
+            error={error.language.length > 0 && true}
             labelId="demo-simple-select-label"
             value={data.language}
             label="Idioma*"
@@ -65,15 +80,15 @@ function InputsBookContainer({
         </FormControl>
 
         {/* para seleccionar varias categorías */}
-        <CheckmarkBook data={data} setData={setData} />
+        <CheckmarkBook data={data} setData={setData} error={error.categories} />
 
         <div className="file-input_container">
           <label htmlFor="image">Portada del libro*</label>
-          <input type="file" accept=".jpg,.jpeg,.png" id="image" onChange={handleImage} />
+          <input type="file" accept=".jpg,.jpeg,.png" id="image" onChange={handleImage} required />
         </div>
         <div className="file-input_container">
           <label htmlFor="file">Archivo*</label>
-          <input type="file" accept=".pdf" id="file" onChange={handleFile} />
+          <input type="file" accept=".pdf" id="file" onChange={handleFile} required />
         </div>
       </section>
 

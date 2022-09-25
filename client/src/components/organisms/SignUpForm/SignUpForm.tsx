@@ -28,6 +28,7 @@ const initial = { username: "", email: "", password: "", showPass: false };
 
 function SignUpForm() {
   const [data, setData] = useState<ICreateUser>(initial);
+  const [error, setError] = useState({ username: "", email: "", password: "" });
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const { setLoggedUser, findLoggedUser } = UserHook();
@@ -35,8 +36,10 @@ function SignUpForm() {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const validation = userValidations(data);
-    if (validation) return AlertBasic("Error..", validation, "error");
+    const { username, email, password } = userValidations(data);
+    if (username.length > 0 || email.length > 0 || password.length > 0) {
+      return setError({ username, email, password });
+    } else setError({ username: "", email: "", password: "" });
 
     setLoading(true);
 
@@ -51,8 +54,12 @@ function SignUpForm() {
       setData(initial);
       navigate("/");
     } catch (err) {
-      if (axios.isAxiosError(err)) AlertBasic("Error!", err.message, "error");
-      else AlertBasic("Error!", "Lo sentimos, vuelva a intentarlo mas tarde", "error");
+      if (axios.isAxiosError(err)) {
+        const { name }: any = err.response?.data;
+        name === "SequelizeUniqueConstraintError"
+          ? AlertBasic("Error!", "Email ya registrado, intente iniciar sesión o use otro.", "error")
+          : AlertBasic("Error!", "Lo sentimos, vuelva a intentarlo mas tarde", "error");
+      } else AlertBasic("Error!", "Lo sentimos, vuelva a intentarlo mas tarde", "error");
     }
     setLoading(false);
   };
@@ -68,6 +75,8 @@ function SignUpForm() {
     <Card elevation={1} className="sign-up_container">
       <form className="sign-up_form" onSubmit={handleSubmit}>
         <TextField
+          error={error.username.length > 0 && true}
+          helperText={error.username.length > 0 && error.username}
           label="Nombre de usuario*"
           variant="outlined"
           size="small"
@@ -77,6 +86,8 @@ function SignUpForm() {
           value={data.username}
         />
         <TextField
+          error={error.email.length > 0 && true}
+          helperText={error.email.length > 0 && error.email}
           label="Email*"
           variant="outlined"
           size="small"
@@ -90,6 +101,7 @@ function SignUpForm() {
             Contraseña*
           </InputLabel>
           <OutlinedInput
+            error={error.password.length > 0 && true}
             id="outlined-adornment-password"
             size="small"
             type={data.showPass ? "text" : "password"}

@@ -16,9 +16,10 @@ import { useEffect } from "react";
 interface Props {
   data: ICreateBook;
   setData: any;
+  error: string;
 }
 
-function CheckmarkBook({ data, setData }: Props) {
+function CheckmarkBook({ data, setData, error }: Props) {
   const { categories, getAllAuthors, getAllCategories } = OtherHook();
 
   useEffect(() => {
@@ -36,6 +37,8 @@ function CheckmarkBook({ data, setData }: Props) {
         Categorías*
       </InputLabel>
       <Select
+        error={error.length > 0 && true}
+        aria-errormessage="error"
         labelId="demo-multiple-checkbox-label"
         multiple
         value={data.categories}

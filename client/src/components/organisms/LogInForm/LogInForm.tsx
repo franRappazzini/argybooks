@@ -26,6 +26,7 @@ const initial = { email: "", password: "", showPass: false };
 
 function LogInForm() {
   const [data, setData] = useState<ILogInUser>(initial);
+  const [error, setError] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const { setLoggedUser, findLoggedUser } = UserHook();
@@ -33,8 +34,9 @@ function LogInForm() {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    const validation = userLogInValidations(data);
-    if (validation) return AlertBasic("Error..", validation, "error");
+    const { email, password } = userLogInValidations(data);
+    if (email.length > 0 || password.length > 0) return setError({ email, password });
+    else setError({ email: "", password: "" });
 
     setLoading(true);
 
@@ -64,6 +66,8 @@ function LogInForm() {
     <Card elevation={1} className="log-in_container">
       <form className="log-in_form" onSubmit={handleSubmit}>
         <TextField
+          error={error.email.length > 0 && true}
+          helperText={error.email.length > 0 && error.email}
           label="Email*"
           variant="outlined"
           size="small"
@@ -77,6 +81,7 @@ function LogInForm() {
             Contraseña*
           </InputLabel>
           <OutlinedInput
+            error={error.password.length > 0 && true}
             id="outlined-adornment-password"
             size="small"
             type={data.showPass ? "text" : "password"}
