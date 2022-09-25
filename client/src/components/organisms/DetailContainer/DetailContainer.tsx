@@ -73,7 +73,7 @@ function DetailContainer({ book, getBookDetail, search }: Props) {
         </section>
       </article>
 
-      <RecommendedBooks />
+      {/* <RecommendedBooks /> */}
     </section>
   );
 }
