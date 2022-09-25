@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import ModalCustom from "../../molecules/ModalCustom/ModalCustom";
 import { TextField } from "@mui/material";
+import Toast from "../../atoms/Toast/Toast";
 import { UserHook } from "../../../utils/customHooks";
 import { hash } from "../../../utils/functions";
 
@@ -46,7 +47,7 @@ function ModalsProfile() {
 
     try {
       await destroyUser(id);
-      localStorage.removeItem("lsLoggedUser");
+      localStorage.clear();
       window.location.href = "/";
     } catch (err) {
       AlertBasic("Error", "Lo sentimos, no se ha podido eliminar el usuario.", "error");
@@ -64,7 +65,7 @@ function ModalsProfile() {
       const res = await findLoggedUser({ email, password: await hash(data.newPassword) });
       localStorage.setItem("lsLoggedUser", JSON.stringify(res));
       setLoggedUser(res);
-      AlertBasic("", "Contraseña actualizada exitosamente!", "success");
+      Toast("success", "Contraseña actualizada exitosamente!");
     } catch (err) {
       AlertBasic("Error", "Lo sentimos, no se ha podido cambiar la contraseña", "error");
     }

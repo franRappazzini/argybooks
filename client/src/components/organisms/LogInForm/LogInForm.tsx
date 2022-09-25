@@ -17,6 +17,7 @@ import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
 import { ILogInUser } from "../../../utils/interfaces";
 import { LoadingButton } from "@mui/lab";
+import Toast from "../../atoms/Toast/Toast";
 import { UserHook } from "../../../utils/customHooks";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -42,8 +43,7 @@ function LogInForm() {
       const res = await findLoggedUser({ ...data, password: hashedPass });
       localStorage.setItem("lsLoggedUser", JSON.stringify(res));
       setLoggedUser(res);
-      // TODO crear toast para esto
-      AlertBasic("Felicidades!", "Ingreso correcto", "success");
+      Toast("success", `Bienvenido nuevamente ${res.username}!`);
       setData(initial);
       setLoading(false);
       navigate(-1);

@@ -16,6 +16,7 @@ import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
 import { ICreateUser } from "../../../utils/interfaces";
 import { LoadingButton } from "@mui/lab";
+import Toast from "../../atoms/Toast/Toast";
 import { UserHook } from "../../../utils/customHooks";
 import axios from "axios";
 import { createUser } from "../../../redux/actions/userActions";
@@ -46,15 +47,14 @@ function SignUpForm() {
       const completeUser = await findLoggedUser(model);
       localStorage.setItem("lsLoggedUser", JSON.stringify(completeUser));
       setLoggedUser(completeUser);
-      AlertBasic("Felicidades!", "Usuario creado con éxito", "success");
+      Toast("success", "Usuario creado con éxito!");
       setData(initial);
-      setLoading(false);
-      navigate(-1);
+      navigate("/");
     } catch (err) {
-      setLoading(false);
-      if (axios.isAxiosError(err)) return AlertBasic("Error!", err.message, "error");
-      else return AlertBasic("Error!", "Lo sentimos, vuelva a intentarlo mas tarde", "error");
+      if (axios.isAxiosError(err)) AlertBasic("Error!", err.message, "error");
+      else AlertBasic("Error!", "Lo sentimos, vuelva a intentarlo mas tarde", "error");
     }
+    setLoading(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

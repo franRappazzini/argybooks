@@ -36,11 +36,6 @@ function DetailContainer({ book, getBookDetail, search }: Props) {
           </Typography>
           <Typography variant="body1" sx={{ fontStyle: "italic", m: "1rem 0" }}>
             <CustomLink to="/books" color="primary" text={author.name} state={author.name} />
-            {/* <Link to="/books" state={{ value: "hola" }}>
-              {author.name}
-              
-            </Link> */}
-            {/* <p onClick={() => navigate("/books", { state: { value: "hola" } })}>{author.name}</p> */}
           </Typography>
 
           <BookDetailRating book={book} getBookDetail={getBookDetail} />

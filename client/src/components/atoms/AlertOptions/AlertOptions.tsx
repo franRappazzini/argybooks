@@ -17,8 +17,7 @@ async function AlertOptions({ title, text, icon, onConfirm }: Props) {
     text,
     icon,
     showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
+    confirmButtonColor: "#1976d2",
     confirmButtonText: "Ver libro creado",
     cancelButtonText: "Seguir creando",
   });
