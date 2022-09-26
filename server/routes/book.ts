@@ -30,9 +30,14 @@ book.post("", async (req, res) => {
     const [authorFind, created] = await Author.findOrCreate(authorOptions);
     // busca el user
     const userFind = await User.findByPk(userId, { rejectOnEmpty: true });
-    // trae los id de las categories
-    const catOptions = { where: { name: { [Op.or]: categories } }, attributes: ["id"] };
-    const categoriesId = await Category.findAll(catOptions);
+    // busca/crea las categories y toma sus id
+    const categoriesId: number[] = [];
+    categories.forEach(async (cat) => {
+      const catOptions = { where: { name: cat } };
+      const [categoryId, created] = await Category.findOrCreate(catOptions);
+      categoriesId.push(categoryId.id);
+    });
+
     // crea el book
     const response = await Book.create(newBook);
 
@@ -41,8 +46,9 @@ book.post("", async (req, res) => {
     await userFind.$add("Book", response.id);
     await authorFind.$add("Book", response.id);
 
-    res.status(201).json({ message: "Book created successfully!", response });
+    res.status(201).json({ message: "Book created successfully!" }); //, response });
   } catch (err) {
+    console.log(err);
     res.status(400).json({ response: err });
   }
 });

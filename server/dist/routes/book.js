@@ -26,18 +26,23 @@ book.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const [authorFind, created] = yield Author_1.Author.findOrCreate(authorOptions);
         // busca el user
         const userFind = yield User_1.User.findByPk(userId, { rejectOnEmpty: true });
-        // trae los id de las categories
-        const catOptions = { where: { name: { [db_1.Op.or]: categories } }, attributes: ["id"] };
-        const categoriesId = yield Category_1.Category.findAll(catOptions);
+        // busca/crea las categories y toma sus id
+        const categoriesId = [];
+        categories.forEach((cat) => __awaiter(void 0, void 0, void 0, function* () {
+            const catOptions = { where: { name: cat } };
+            const [categoryId, created] = yield Category_1.Category.findOrCreate(catOptions);
+            categoriesId.push(categoryId.id);
+        }));
         // crea el book
         const response = yield Book_1.Book.create(newBook);
         // agrega sus relaciones
         yield response.$add("Category", categoriesId);
         yield userFind.$add("Book", response.id);
         yield authorFind.$add("Book", response.id);
-        res.status(201).json({ message: "Book created successfully!", response });
+        res.status(201).json({ message: "Book created successfully!" }); //, response });
     }
     catch (err) {
+        console.log(err);
         res.status(400).json({ response: err });
     }
 }));
