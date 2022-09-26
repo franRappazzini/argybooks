@@ -78,7 +78,13 @@ function DetailContainer({ book, getBookDetail, search }: Props) {
             </span>
           </div>
 
-          <Button variant="contained" size="small" download={`${name}.pdf`} href={downloadLink}>
+          <Button
+            variant="contained"
+            size="small"
+            download={`${name}.pdf`}
+            href={downloadLink}
+            disabled={!downloadLink}
+          >
             Descargar PDF
           </Button>
         </section>
