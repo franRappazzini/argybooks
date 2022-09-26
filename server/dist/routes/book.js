@@ -39,7 +39,7 @@ book.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield response.$add("Category", categoriesId);
         yield userFind.$add("Book", response.id);
         yield authorFind.$add("Book", response.id);
-        res.status(201).json({ message: "Book created successfully!" }); //, response });
+        res.status(201).json({ message: "Book created successfully!", response });
     }
     catch (err) {
         console.log(err);
