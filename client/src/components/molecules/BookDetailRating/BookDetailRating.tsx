@@ -114,14 +114,10 @@ function BookDetailRating({ book, getBookDetail }: Props) {
           )}
         </MenuItem>
       </Menu>
-      <Typography variant="body1" sx={{ mr: "0.5rem" }}>
-        Rating: {rating.toFixed(2)} / Comentarios: 99
+      <Typography variant="body1" sx={{ mr: "1rem" }}>
+        {rating.toFixed(1)}
       </Typography>
 
-      {/* <Tooltip
-        title={!loggedUser?.id && "Debe iniciar sesión para guardar en favoritos"}
-        followCursor
-      > */}
       <IconButton
         aria-label={verifyIsFav() ? "Quitar de favoritos" : "Agregar a favoritos"}
         onClick={handleFavorite}
@@ -129,7 +125,6 @@ function BookDetailRating({ book, getBookDetail }: Props) {
       >
         {verifyIsFav() ? <Favorite color="error" /> : <FavoriteBorderOutlined />}
       </IconButton>
-      {/* </Tooltip> */}
     </section>
   );
 }

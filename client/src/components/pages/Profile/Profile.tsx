@@ -11,18 +11,20 @@ function Profile() {
 
   return (
     <main className="profile_component component">
-      <Card elevation={1} className="profile_card">
-        <div className="data_ container">
-          <Typography color="text.secondary">Nombre de usuario:</Typography>
-          <Typography>{username}</Typography>
-        </div>
-        <div className="data_container">
-          <Typography color="text.secondary">Email:</Typography>
-          <Typography>{email}</Typography>
-        </div>
+      <section className="card_container">
+        <Card elevation={1} className="profile_card">
+          <div className="data_ container">
+            <Typography color="text.secondary">Nombre de usuario:</Typography>
+            <Typography>{username}</Typography>
+          </div>
+          <div className="data_container">
+            <Typography color="text.secondary">Email:</Typography>
+            <Typography>{email}</Typography>
+          </div>
 
-        <ModalsProfile />
-      </Card>
+          <ModalsProfile />
+        </Card>
+      </section>
     </main>
   );
 }

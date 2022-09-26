@@ -8,6 +8,7 @@ import CreateBook from "./components/pages/CreateBook/CreateBook";
 import CssBaseline from "@mui/material/CssBaseline";
 import Detail from "./components/pages/Detail/Detail";
 import Favorites from "./components/pages/Favorites/Favorites";
+import Footer from "./components/organisms/Footer/Footer";
 import Header from "./components/organisms/Header/Header";
 import Home from "./components/pages/Home/Home";
 import IsLogged from "./components/pages/IsLogged/IsLogged";
@@ -54,6 +55,8 @@ function App() {
 
           <Route path="*" element={<Page404 />} />
         </Routes>
+
+        <Footer />
       </>
     </ThemeProvider>
   );
