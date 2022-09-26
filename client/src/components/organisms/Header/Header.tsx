@@ -52,7 +52,8 @@ function Header() {
                   <FavoriteBorderRounded />
                 </Badge>
               </IconButton>
-              <MenuHeader {...loggedUser} />
+
+              <MenuHeader loggedUser={loggedUser} />
             </div>
           ) : (
             <div className="btns_container">
