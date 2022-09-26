@@ -1,11 +1,13 @@
 import "./InputsBookContainer.scss";
 
-import { FormControl, InputLabel, MenuItem, TextField } from "@mui/material";
+import { Autocomplete, FormControl, InputLabel, MenuItem, TextField } from "@mui/material";
 
-import CheckmarkBook from "../../atoms/CheckmarkBook/CheckmarkBook";
 import { ICreateBook } from "../../../utils/interfaces";
+import { OtherHook } from "../../../utils/customHooks";
 import Select from "@mui/material/Select";
+import SelectCategories from "../../atoms/SelectCategories/SelectCategories";
 import { arrLanguages } from "../../../utils/vars";
+import { useEffect } from "react";
 
 interface InputValues {
   data: ICreateBook;
@@ -32,18 +34,34 @@ function InputsBookContainer({
   handleImage,
   error,
 }: InputValues) {
+  const { getAllAuthors, getAllCategories, authors } = OtherHook();
+
+  useEffect(() => {
+    getAllAuthors();
+    getAllCategories();
+  }, []);
+
   return (
     <>
       <section className="inputs-book_container">
-        <TextField
-          error={error.author.length > 0 && true}
-          helperText={error.author.length > 0 && error.author}
-          size="small"
-          label="Autor*"
-          variant="outlined"
-          name="author"
-          value={data.author}
-          onChange={handleChange}
+        <Autocomplete
+          id="free-solo-demo"
+          freeSolo
+          options={authors.map((author: string) => author)}
+          onChange={(e, val) => setData({ ...data, author: val })}
+          disableClearable
+          renderInput={(params) => (
+            <TextField
+              error={error.author.length > 0 && true}
+              helperText={error.author.length > 0 && error.author}
+              {...params}
+              size="small"
+              label="Autor*"
+              name="author"
+              value={data.author}
+              onChange={handleChange}
+            />
+          )}
         />
         <TextField
           error={error.year.length > 0 && true}
@@ -80,7 +98,7 @@ function InputsBookContainer({
         </FormControl>
 
         {/* para seleccionar varias categorías */}
-        <CheckmarkBook data={data} setData={setData} error={error.categories} />
+        <SelectCategories data={data} setData={setData} error={error.categories} />
 
         <div className="file-input_container">
           <label htmlFor="image">Portada del libro*</label>

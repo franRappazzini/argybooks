@@ -25,7 +25,7 @@ export const bookValidations = (
   if (!arrLanguages.includes(language))
     errors.language = "El idioma debe ser una de las opciones disponibles.";
   if (!categories.length || categories.length > 4)
-    errors.categories = "Debes seleccionar al menos una categoría.";
+    errors.categories = "Debes seleccionar entre 1 y 4 categorías.";
   if (description.length >= 2000)
     errors.description = `La descripción debe contener menos de 2000 caracteres (contiene ${description.length})`;
   if (!image) errors.imageV = "Debes seleccionar una imagen de portada para el libro.";
