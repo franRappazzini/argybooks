@@ -68,7 +68,8 @@ export const uploadBook = async (file: unknown) => {
 
 export const downloadBook = async (name: string) => {
   try {
-    await axios.get(`/aws/download?name=${name}`);
+    const { data } = await axios.get(`/aws/download?name=${name}`);
+    return data;
   } catch (err) {
     throw err;
   }

@@ -1,7 +1,7 @@
 import "./DetailContainer.scss";
 
 import { Breadcrumbs, Button, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import BookDetailRating from "../../molecules/BookDetailRating/BookDetailRating";
 import { CompleteBook } from "../../../utils/interfaces";
@@ -18,7 +18,18 @@ interface Props {
 // TODO ver porque puse el search en las Props
 function DetailContainer({ book, getBookDetail, search }: Props) {
   const { name, author, description, categories, year, language } = book;
-  const handleDownload = () => downloadBook(name);
+  const [downloadLink, setDownloadLink] = useState<any>();
+
+  useEffect(() => {
+    // para poder descargar el pdf
+    const preDownload = async () => {
+      const { data } = await downloadBook(name);
+      const blob = new Blob([new Uint8Array(data?.data).buffer]);
+      setDownloadLink(window.URL.createObjectURL(blob));
+    };
+
+    preDownload();
+  }, [name]);
 
   return (
     <section className="detail_container max_width">
@@ -67,7 +78,7 @@ function DetailContainer({ book, getBookDetail, search }: Props) {
             </span>
           </div>
 
-          <Button variant="contained" size="small" onClick={handleDownload}>
+          <Button variant="contained" size="small" download={`${name}.pdf`} href={downloadLink}>
             Descargar PDF
           </Button>
         </section>

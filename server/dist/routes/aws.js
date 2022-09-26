@@ -38,7 +38,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 const aws_sdk_1 = __importDefault(require("aws-sdk"));
 const express_1 = require("express");
-const fs_1 = __importDefault(require("fs"));
 dotenv.config();
 const { AWS_KEY, AWS_SECRET_KEY, BUCKET_NAME } = process.env;
 const config = {
@@ -75,22 +74,14 @@ aws.get("/download", (req, res) => __awaiter(void 0, void 0, void 0, function* (
             Bucket: BUCKET_NAME || "",
             Key: `${name}.pdf`,
         };
-        s3.getObject(bucketAndKey, (err, data) => {
+        s3.getObject(bucketAndKey, (err, data) => __awaiter(void 0, void 0, void 0, function* () {
             if (err)
                 throw err;
-            console.log(data);
-            const path = `${process.env.USERPROFILE}/Downloads/${name}`;
-            fs_1.default.writeFile(path, data.Body, (err) => {
-                if (err)
-                    throw err;
-                console.log("OK");
-            });
-        });
-        console.log(process.env.USERPROFILE);
-        res.json({ message: "Book downloaded successfully!" });
+            res.json({ data: yield data.Body });
+        }));
     }
     catch (err) {
-        res.status(404).json({ response: err });
+        res.status(404).json(err);
     }
 }));
 exports.default = aws;

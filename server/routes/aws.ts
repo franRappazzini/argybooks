@@ -46,22 +46,12 @@ aws.get("/download", async (req, res) => {
       Key: `${name}.pdf`,
     };
 
-    s3.getObject(bucketAndKey, (err, data: any) => {
+    s3.getObject(bucketAndKey, async (err, data: any) => {
       if (err) throw err;
-      console.log(data);
-
-      const path = `${process.env.USERPROFILE}/Downloads/${name}`;
-      fs.writeFile(path, data.Body, (err) => {
-        if (err) throw err;
-        console.log("OK");
-      });
+      res.json({ data: await data.Body });
     });
-
-    console.log(process.env.USERPROFILE);
-
-    res.json({ message: "Book downloaded successfully!" });
   } catch (err) {
-    res.status(404).json({ response: err });
+    res.status(404).json(err);
   }
 });
 
