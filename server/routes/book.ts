@@ -46,7 +46,7 @@ book.post("", async (req, res) => {
     await userFind.$add("Book", response.id);
     await authorFind.$add("Book", response.id);
 
-    res.status(201).json({ message: "Book created successfully!" }); //, response });
+    res.status(201).json({ message: "Book created successfully!", response });
   } catch (err) {
     console.log(err);
     res.status(400).json({ response: err });
