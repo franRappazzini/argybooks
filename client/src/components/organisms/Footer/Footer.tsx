@@ -8,32 +8,35 @@ function Footer() {
     <Card className="footer_component">
       <footer className="max_width">
         <section className="social_container">
-          <Typography mr={2}>Creado por Francisco Rappazzini</Typography>
-          <Link
-            href="https://github.com/franRappazzini"
-            color="inherit"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <GitHub />
-          </Link>
-          <Link
-            href="https://www.linkedin.com/in/francisco-rappazzini/"
-            color="inherit"
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{ m: "0 1rem" }}
-          >
-            <LinkedIn />
-          </Link>
-          <Link
-            href="mailto:fran_rappa@outlook.com"
-            color="inherit"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Email />
-          </Link>
+          <Typography>Creado por Francisco Rappazzini</Typography>
+
+          <div>
+            <Link
+              href="https://github.com/franRappazzini"
+              color="inherit"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <GitHub />
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/francisco-rappazzini/"
+              color="inherit"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ m: "0 1rem" }}
+            >
+              <LinkedIn />
+            </Link>
+            <Link
+              href="mailto:fran_rappa@outlook.com"
+              color="inherit"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Email />
+            </Link>
+          </div>
         </section>
 
         {/* <Typography>¿Has encontrado un error?</Typography> */}

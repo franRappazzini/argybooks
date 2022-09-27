@@ -9,10 +9,26 @@
 
     .social_container {
       display: flex;
+
+      div {
+        margin-left: 1rem;
+      }
     }
   }
 
   @media only screen and (max-width: 820px) {
     padding: 2rem 1rem;
+
+    footer {
+      .social_container {
+        flex-direction: column;
+
+        div {
+          display: flex;
+          justify-content: center;
+          margin: 0;
+        }
+      }
+    }
   }
 }
