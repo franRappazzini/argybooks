@@ -5,6 +5,7 @@ import { BookHook, OtherHook } from "../../../utils/customHooks";
 import CardBook from "../../molecules/CardBook/CardBook";
 import { CircularProgress } from "@mui/material";
 import { CompleteBook } from "../../../utils/interfaces";
+import NotFoundMessage from "../../atoms/NotFoundMessage/NotFoundMessage";
 import SearchBar from "../../molecules/SearchBar/SearchBar";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -31,8 +32,7 @@ function Books() {
         ) : books.length > 0 ? (
           books.map((book: CompleteBook) => <CardBook key={book.id} {...book} />)
         ) : (
-          // TODO crear componente y dar opción de crearlo
-          <p>Lo sentimos no se encontró nada, quieres subir el libro a nuestra db?</p>
+          <NotFoundMessage />
         )}
       </section>
     </main>

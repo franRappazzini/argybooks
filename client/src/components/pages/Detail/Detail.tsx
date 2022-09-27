@@ -3,6 +3,7 @@ import "./Detail.scss";
 import { BookHook } from "../../../utils/customHooks";
 import { CircularProgress } from "@mui/material";
 import DetailContainer from "../../organisms/DetailContainer/DetailContainer";
+import NotFoundMessage from "../../atoms/NotFoundMessage/NotFoundMessage";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -22,7 +23,9 @@ function Detail() {
       ) : book && Object.values(book).length > 0 ? (
         <DetailContainer book={book} getBookDetail={getBookDetail} />
       ) : (
-        <p>Lo sentimos, no se encontró coincidencia</p>
+        <div className="not-found_container">
+          <NotFoundMessage />
+        </div>
       )}
     </main>
   );
