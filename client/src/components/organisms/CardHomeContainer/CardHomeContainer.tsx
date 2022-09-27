@@ -4,6 +4,7 @@ import { CircularProgress, ImageList, ImageListItem, Typography } from "@mui/mat
 
 import { BookHook } from "../../../utils/customHooks";
 import { CompleteBook } from "../../../utils/interfaces";
+import NotFoundMessage from "../../atoms/NotFoundMessage/NotFoundMessage";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +45,7 @@ function CardHomeContainer() {
           ))}
         </ImageList>
       ) : (
-        <p>Lo sentimos, aun no hay libros disponibles. Puedes cargar</p>
+        <NotFoundMessage />
       )}
     </section>
   );
