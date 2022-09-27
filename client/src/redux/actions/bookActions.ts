@@ -29,6 +29,7 @@ export const getBook = (id: string | undefined) => {
       const { data } = await axios.get(URL + `/${id}`);
       dispatch({ type: bookActions.GET_BOOK, payload: data });
     } catch (err) {
+      dispatch({ type: bookActions.GET_BOOK, payload: {} });
       throw err;
     }
   };
