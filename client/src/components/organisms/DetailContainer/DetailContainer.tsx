@@ -12,16 +12,14 @@ import { downloadBook } from "../../../redux/actions/bookActions";
 interface Props {
   book: CompleteBook;
   getBookDetail: (id: string) => void;
-  search?: string;
 }
 
-// TODO ver porque puse el search en las Props
-function DetailContainer({ book, getBookDetail, search }: Props) {
+function DetailContainer({ book, getBookDetail }: Props) {
   const { name, author, description, categories, year, language } = book;
   const [downloadLink, setDownloadLink] = useState<any>();
 
   useEffect(() => {
-    // para poder descargar el pdf
+    // genero el link para poder descargar el book
     const preDownload = async () => {
       const { data } = await downloadBook(name);
       const blob = new Blob([new Uint8Array(data?.data).buffer]);
@@ -40,7 +38,7 @@ function DetailContainer({ book, getBookDetail, search }: Props) {
       </Breadcrumbs>
 
       <article className="article_book">
-        <div style={{ backgroundImage: `url(${book.image})` }} className="img_detail"></div>
+        <img src={book.image} alt={book.name} className="img_detail" />
         <section className="details">
           <Typography variant="h4" component="h1">
             {name}

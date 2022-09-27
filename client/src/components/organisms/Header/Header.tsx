@@ -31,7 +31,7 @@ function Header() {
   }, [lsLoggedUser, lsTheme]);
 
   return (
-    <Card elevation={1} className="header_component">
+    <Card className="header_component">
       <header className="header_container max_width">
         <nav className="nav_header">
           <CustomLink to="/" text="Book" color="inherit" underline="none" variant="h6" />

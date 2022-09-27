@@ -1,5 +1,6 @@
 .component {
   padding: 0 2rem;
+  min-height: 100vh;
 }
 
 .max_width {
