@@ -1,4 +1,4 @@
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Backdrop, Button, CircularProgress, Typography } from "@mui/material";
 
 import { SweetAlertResult } from "sweetalert2";
 
@@ -16,8 +16,17 @@ function BackdropCustom({ btnText, onClick, open }: Props) {
       <Button type="submit" onClick={handleToggle} variant="contained">
         {btnText}
       </Button>
-      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
+      <Backdrop
+        sx={{
+          color: "#fff",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          display: "flex",
+          flexDirection: "column",
+        }}
+        open={open}
+      >
         <CircularProgress color="inherit" />
+        <Typography mt={2}>Puede demorar varios segundos...</Typography>
       </Backdrop>
     </>
   );
