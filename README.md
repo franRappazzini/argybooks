@@ -12,3 +12,9 @@ Con opcion de descargar libros, añadir nuevos, guardar en favoritos, puntuar, c
 * AWS
 * Sass
 * Material UI
+
+### Deploy
+
+* Front: Vercel
+* Back: Heroku
+* DB: ElephantSQL
