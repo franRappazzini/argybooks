@@ -1,5 +1,6 @@
 import "./CreateBook.scss";
 
+import { bookValidations, strWithoutDiacritics } from "../../../utils/functions";
 import { createBook, uploadBook, uploadBookCover } from "../../../redux/actions/bookActions";
 
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
@@ -9,7 +10,6 @@ import { ICreateBook } from "../../../utils/interfaces";
 import InputsBookContainer from "../../molecules/InputsBookContainer/InputsBookContainer";
 import { UserHook } from "../../../utils/customHooks";
 import axios from "axios";
-import { bookValidations } from "../../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -86,8 +86,6 @@ function CreateBook() {
       await uploadBook(bookFile);
       const res = await createBook(newBook);
 
-      console.log(res);
-
       AlertOptions({
         title: "Creado!",
         text: "Libro creado exitosamente",
@@ -113,8 +111,11 @@ function CreateBook() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       const file = e.target.files[0];
-      setFile(file);
-      setData({ ...data, name: file.name });
+      const newFile = new File([file], strWithoutDiacritics(file.name), {
+        type: "application/pdf",
+      });
+      setFile(newFile);
+      setData({ ...data, name: newFile.name });
     }
   };
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
