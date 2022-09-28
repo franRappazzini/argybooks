@@ -34,7 +34,7 @@ function Header() {
     <Card className="header_component">
       <header className="header_container max_width">
         <nav className="nav_header">
-          <CustomLink to="/" text="Book" color="inherit" underline="none" variant="h6" />
+          <CustomLink to="/" text="Argy Books" color="inherit" underline="none" variant="h6" />
 
           <div>
             <CustomLink to="/books" text="Buscar libros" color="inherit" />
