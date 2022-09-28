@@ -103,4 +103,14 @@ book.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(404).json({ message: err });
     }
 }));
+book.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    try {
+        yield Book_1.Book.destroy({ where: { id } });
+        res.status(201).json({ message: "Book deleted successfully!" });
+    }
+    catch (err) {
+        res.status(404).json(err);
+    }
+}));
 exports.default = book;

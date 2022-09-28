@@ -114,4 +114,15 @@ book.get("/:id", async (req, res) => {
   }
 });
 
+book.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    await Book.destroy({ where: { id } });
+    res.status(201).json({ message: "Book deleted successfully!" });
+  } catch (err) {
+    res.status(404).json(err);
+  }
+});
+
 export default book;
