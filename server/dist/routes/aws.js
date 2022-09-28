@@ -59,7 +59,6 @@ aws.post("/upload", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         s3.putObject(putObject, (err, data) => {
             if (err)
                 throw err;
-            console.log(data);
         });
         res.status(201).json({ message: "Book uploaded successfully!" });
     }

@@ -48,7 +48,6 @@ book.post("", async (req, res) => {
 
     res.status(201).json({ message: "Book created successfully!", response });
   } catch (err) {
-    console.log(err);
     res.status(400).json({ response: err });
   }
 });
@@ -96,7 +95,6 @@ book.get("/top", async (req, res) => {
     const response = await Book.findAll({ order: [["rating", "DESC"]], limit: 50 });
     res.json(response);
   } catch (err) {
-    console.log(err);
     res.status(404).json(err);
   }
 });

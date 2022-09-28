@@ -8,7 +8,6 @@ const review = Router();
 
 review.post("", async (req, res) => {
   const { userId, bookId, rating } = req.body;
-  console.log(req.body);
 
   try {
     // busco para agregar relaciones
@@ -18,8 +17,6 @@ review.post("", async (req, res) => {
       where: { [Op.and]: [{ bookId }, { userId }] },
       defaults: { rating, bookId, userId },
     });
-
-    console.log(response);
 
     if (rating === 0) await response.destroy();
     else if (created) {
