@@ -83,7 +83,7 @@ function DetailContainer({ book, getBookDetail }: Props) {
             href={downloadLink}
             disabled={!downloadLink}
           >
-            Descargar PDF
+            {downloadLink ? "Descargar PDF" : "Aguarde para descargar"}
           </Button>
         </section>
       </article>
