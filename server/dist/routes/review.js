@@ -17,7 +17,6 @@ const User_1 = require("../db/models/User");
 const review = (0, express_1.Router)();
 review.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId, bookId, rating } = req.body;
-    console.log(req.body);
     try {
         // busco para agregar relaciones
         const userFind = yield User_1.User.findByPk(userId, { rejectOnEmpty: true });
@@ -26,7 +25,6 @@ review.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             where: { [db_1.Op.and]: [{ bookId }, { userId }] },
             defaults: { rating, bookId, userId },
         });
-        console.log(response);
         if (rating === 0)
             yield response.destroy();
         else if (created) {

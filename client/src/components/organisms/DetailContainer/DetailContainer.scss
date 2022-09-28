@@ -13,11 +13,12 @@
   @media only screen and (max-width: 660px) {
     .article_book {
       grid-template-columns: 1fr;
-      grid-template-rows: 40vh 1fr;
+      grid-template-rows: 45vh 1fr;
 
       .img_detail {
         max-width: 80%;
         width: auto;
+        height: 100%;
         justify-self: center;
       }
     }

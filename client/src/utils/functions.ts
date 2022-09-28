@@ -67,3 +67,7 @@ export const hash = async (str: string) => {
 
   return hashHex;
 };
+
+// para sacarle caracteres utf8 a los str - para subir a aws
+export const strWithoutDiacritics = (str: string) =>
+  str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");

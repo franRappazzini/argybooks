@@ -7,7 +7,6 @@ const favorite = Router();
 
 favorite.post("", async (req, res) => {
   const { userId, bookId } = req.body;
-  console.log(req.body);
 
   try {
     const response = await User.findByPk(userId);
@@ -19,7 +18,6 @@ favorite.post("", async (req, res) => {
 
     res.status(200).json({ message: "Request successfully!" });
   } catch (err) {
-    console.log(err);
     res.status(400).json(err);
   }
 });

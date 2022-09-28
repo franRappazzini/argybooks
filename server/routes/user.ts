@@ -12,7 +12,6 @@ user.post("", async (req, res) => {
     const response = await User.create({ email, password, username });
     res.status(201).json({ message: "User created successfully!", response });
   } catch (err) {
-    console.log(err);
     res.status(400).json(err);
   }
 });
@@ -24,7 +23,6 @@ user.get("", async (req, res) => {
     });
     res.json(response);
   } catch (err) {
-    console.log(err);
     res.status(404).json(err);
   }
 });
@@ -72,7 +70,6 @@ user.put("/:id", async (req, res) => {
     await response.save();
     res.json({ message: "Password updated successfully!", response });
   } catch (err) {
-    console.log(err);
     res.status(400).json(err);
   }
 });

@@ -42,7 +42,6 @@ book.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(201).json({ message: "Book created successfully!", response });
     }
     catch (err) {
-        console.log(err);
         res.status(400).json({ response: err });
     }
 }));
@@ -88,7 +87,6 @@ book.get("/top", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(response);
     }
     catch (err) {
-        console.log(err);
         res.status(404).json(err);
     }
 }));

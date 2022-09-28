@@ -16,7 +16,6 @@ const User_1 = require("../db/models/User");
 const favorite = (0, express_1.Router)();
 favorite.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId, bookId } = req.body;
-    console.log(req.body);
     try {
         const response = yield User_1.User.findByPk(userId);
         // si no tiene ese favorito, lo agrega sino, lo elimina
@@ -28,7 +27,6 @@ favorite.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(200).json({ message: "Request successfully!" });
     }
     catch (err) {
-        console.log(err);
         res.status(400).json(err);
     }
 }));

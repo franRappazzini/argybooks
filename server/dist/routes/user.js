@@ -21,7 +21,6 @@ user.post("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(201).json({ message: "User created successfully!", response });
     }
     catch (err) {
-        console.log(err);
         res.status(400).json(err);
     }
 }));
@@ -33,7 +32,6 @@ user.get("", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json(response);
     }
     catch (err) {
-        console.log(err);
         res.status(404).json(err);
     }
 }));
@@ -76,7 +74,6 @@ user.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.json({ message: "Password updated successfully!", response });
     }
     catch (err) {
-        console.log(err);
         res.status(400).json(err);
     }
 }));
