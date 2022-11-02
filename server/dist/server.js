@@ -28,7 +28,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 const author_1 = __importDefault(require("./routes/author"));
-const aws_1 = __importDefault(require("./routes/aws"));
 const book_1 = __importDefault(require("./routes/book"));
 const category_1 = __importDefault(require("./routes/category"));
 const cors_1 = __importDefault(require("cors"));
@@ -46,10 +45,7 @@ server.use(express_1.default.json());
 server.use((0, express_fileupload_1.default)());
 server.use(express_1.default.static("files"));
 server.use((0, morgan_1.default)("tiny"));
-// TODO rejectOnEmpty revisar
-// TODO include
 server.use("/book", book_1.default);
-server.use("/aws", aws_1.default);
 server.use("/category", category_1.default);
 server.use("/user", user_1.default);
 server.use("/author", author_1.default);
