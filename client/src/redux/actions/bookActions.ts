@@ -59,23 +59,6 @@ export const createBook = async (data: object) => {
   }
 };
 
-export const uploadBook = async (file: unknown) => {
-  try {
-    await axios.post("/aws/upload", file);
-  } catch (err) {
-    throw err;
-  }
-};
-
-export const downloadBook = async (name: string) => {
-  try {
-    const { data } = await axios.get(`/aws/download?name=${name}`);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
-
 export const uploadBookCover = async (image: FormData) => {
   try {
     return await axios.post(

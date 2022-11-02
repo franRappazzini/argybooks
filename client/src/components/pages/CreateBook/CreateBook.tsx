@@ -1,7 +1,7 @@
 import "./CreateBook.scss";
 
-import { bookValidations, strWithoutDiacritics } from "../../../utils/functions";
-import { createBook, uploadBook, uploadBookCover } from "../../../redux/actions/bookActions";
+import { createBook, uploadBookCover } from "../../../redux/actions/bookActions";
+import { ref, storage, uploadBytes } from "../../../utils/firebase";
 
 import AlertBasic from "../../atoms/AlertBasic/AlertBasic";
 import AlertOptions from "../../atoms/AlertOptions/AlertOptions";
@@ -10,6 +10,7 @@ import { ICreateBook } from "../../../utils/interfaces";
 import InputsBookContainer from "../../molecules/InputsBookContainer/InputsBookContainer";
 import { UserHook } from "../../../utils/customHooks";
 import axios from "axios";
+import { bookValidations } from "../../../utils/functions";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -73,17 +74,11 @@ function CreateBook() {
       bookCoverImg.append("upload_preset", process.env.REACT_APP_PRESET || "");
       const coverRes = await uploadBookCover(bookCoverImg);
 
-      const newBook = {
-        ...data,
-        image: coverRes.data.url,
-        userId: loggedUser.id,
-      };
+      const newBook = { ...data, image: coverRes.data.url, userId: loggedUser.id };
 
-      const bookFile = new FormData();
-      bookFile.append("file", file);
-      bookFile.append("fileName", file.name);
+      const storageRef = ref(storage(), newBook.name);
+      await uploadBytes(storageRef, file);
 
-      await uploadBook(bookFile);
       const res = await createBook(newBook);
 
       AlertOptions({
@@ -110,12 +105,8 @@ function CreateBook() {
   };
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
-      const file = e.target.files[0];
-      const newFile = new File([file], strWithoutDiacritics(file.name), {
-        type: "application/pdf",
-      });
-      setFile(newFile);
-      setData({ ...data, name: newFile.name });
+      setFile(e.target.files[0]);
+      setData({ ...data, name: e.target.files[0].name });
     }
   };
   const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {

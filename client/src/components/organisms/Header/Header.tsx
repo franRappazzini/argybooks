@@ -18,7 +18,6 @@ function Header() {
   const lsLoggedUser = localStorage.getItem("lsLoggedUser");
   const lsTheme = localStorage.getItem("lsTheme");
 
-  // TODO ojo no se si anda
   useEffect(() => {
     // para actualizar el logged user
     if (lsLoggedUser) {

@@ -52,7 +52,6 @@ function BookDetailRating({ book, getBookDetail }: Props) {
 
     const newReview: ICreateReview = { userId: loggedUser.id, bookId: id, rating: num };
     try {
-      // TODO fijarme que tiene que quedar marcado por default la valuation si el user ya hizo review
       await createReview(newReview);
       getBookDetail(id.toString());
       const res = await findLoggedUser({ email: loggedUser.email, password: loggedUser.password });
