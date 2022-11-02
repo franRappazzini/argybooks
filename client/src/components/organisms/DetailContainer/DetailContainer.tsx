@@ -1,13 +1,13 @@
 import "./DetailContainer.scss";
 
 import { Breadcrumbs, Button, Typography } from "@mui/material";
+import { getDownloadURL, ref, storage } from "../../../utils/firebase";
 import { useEffect, useState } from "react";
 
 import BookDetailRating from "../../molecules/BookDetailRating/BookDetailRating";
 import { CompleteBook } from "../../../utils/interfaces";
 import CustomLink from "../../atoms/CustomLink/CustomLink";
 import RecommendedBooks from "../../molecules/RecommendedBooks/RecommendedBooks";
-import { downloadBook } from "../../../redux/actions/bookActions";
 
 interface Props {
   book: CompleteBook;
@@ -20,13 +20,16 @@ function DetailContainer({ book, getBookDetail }: Props) {
 
   useEffect(() => {
     // genero el link para poder descargar el book
-    const preDownload = async () => {
-      const { data } = await downloadBook(name);
-      const blob = new Blob([new Uint8Array(data?.data).buffer]);
-      setDownloadLink(window.URL.createObjectURL(blob));
+    const getDownloadLink = async () => {
+      try {
+        const url = await getDownloadURL(ref(storage(), name + ".pdf"));
+        setDownloadLink(url);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
-    preDownload();
+    getDownloadLink();
   }, [name]);
 
   return (
@@ -76,15 +79,16 @@ function DetailContainer({ book, getBookDetail }: Props) {
             </span>
           </div>
 
-          <Button
-            variant="contained"
-            size="small"
-            download={`${name}.pdf`}
+          <a
             href={downloadLink}
-            disabled={!downloadLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="downloaded_link"
           >
-            {downloadLink ? "Descargar PDF" : "Aguarde para descargar"}
-          </Button>
+            <Button variant="contained" size="small" disabled={!downloadLink}>
+              {downloadLink ? "Descargar PDF" : "Aguarde para descargar"}
+            </Button>
+          </a>
         </section>
       </article>
 

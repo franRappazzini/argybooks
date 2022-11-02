@@ -1,7 +1,6 @@
 import * as dotenv from "dotenv";
 
 import author from "./routes/author";
-import aws from "./routes/aws";
 import book from "./routes/book";
 import category from "./routes/category";
 import cors from "cors";
@@ -22,10 +21,7 @@ server.use(fileupload());
 server.use(express.static("files"));
 server.use(morgan("tiny"));
 
-// TODO rejectOnEmpty revisar
-// TODO include
 server.use("/book", book);
-server.use("/aws", aws);
 server.use("/category", category);
 server.use("/user", user);
 server.use("/author", author);
