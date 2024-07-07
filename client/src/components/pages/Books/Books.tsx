@@ -28,7 +28,10 @@ function Books() {
 
       <section className="books_container">
         {loading ? (
-          <CircularProgress />
+          <div className="loader_container">
+            <CircularProgress />
+            <span>La primer carga podria demorar hasta un minuto...</span>
+          </div>
         ) : books.length > 0 ? (
           books.map((book: CompleteBook) => <CardBook key={book.id} {...book} />)
         ) : (

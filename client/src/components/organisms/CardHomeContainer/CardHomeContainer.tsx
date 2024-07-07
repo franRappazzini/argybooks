@@ -26,7 +26,7 @@ function CardHomeContainer() {
       {loading ? (
         <div className="spinner_container">
           <CircularProgress />
-          <span>La primer carga puede demorar un minuto...</span>
+          <span>La primer carga podria demorar hasta un minuto...</span>
         </div>
       ) : topBooks.length > 0 ? (
         <ImageList variant="masonry" cols={window.innerWidth > 660 ? 5 : 3} gap={8}>
