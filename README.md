@@ -16,5 +16,5 @@ Con opcion de descargar libros, añadir nuevos, guardar en favoritos, puntuar, c
 ### Deploy
 
 * Front: Vercel
-* Back: Heroku
+* Back: Render
 * DB: ElephantSQL
